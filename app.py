@@ -2985,7 +2985,7 @@ def generate_fallback_response(question, patient_data, reports, observations):
         response += "- Follow-up appointments are critical for monitoring\n"
         response += "- Report side effects immediately\n"
         response += "- Consult with specialist if condition does not improve\n"
-    
+
     # VITAL SIGNS & OBSERVATIONS
     elif any(word in question_lower for word in ['vital', 'observation', 'test', 'lab', 'result', 'value', 'measurement']):
         response = f"**Lab Results & Test Values for {patient_name}:**\n\n"
@@ -3300,3 +3300,5 @@ if __name__ == "__main__":
     # Load conversion history on startup
     load_conversion_history()
     app.run(debug=True)
+    
+print("Kidney analysis API started")
