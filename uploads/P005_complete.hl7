@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113935||ADT^A01|MSG005|P|2.5
+EVN|A01|20260204113935
+PID|1||P005^^^HOSPITAL||Davis^James||19550930|M|||654 Oak Lane^Phoenix^AZ^85001^^^^C||+1-555-0105^PH^^^1~james.davis@email.com^E
+NK1|1|Linda Davis|WIF||+1-555-0004
+OBX|1|NM|8867-4^Heart rate^LN||82|beats/minute|||||F|||20260204112430
+OBX|2|NM|8480-6^Systolic blood pressure^LN||140|mmHg|||||F|||20260204112430
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||88|mmHg|||||F|||20260204112430
+OBX|4|NM|59408-5^Oxygen saturation^LN||95|%|||||F|||20260204112430
+OBX|5|NM|8310-5^Body temperature^LN||38.3|Cel|||||F|||20260204112430
+OBX|6|NM|29463-7^Body weight^LN||80|kg|||||F|||20260204112430
+OBX|7|NM|8302-2^Body height^LN||175|cm|||||F|||20260204112430
+DG1|1|ICD10|J18.1^^ICD-10-CM|Lobar pneumonia unspecified|||||||||||||H
+DG1|2|ICD10|I10^^ICD-10-CM|Essential hypertension|||||||||||||M
+PR1|1|1234571|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Left upper lobe consolidation. Heart size normal. No pleural effusion. Mild cardiomegaly noted.
+NTE|2||IMPRESSION: Lobar pneumonia of left upper lobe. Hypertension complicating management. Aggressive treatment indicated.
+NTE|3||MEDICATIONS: Levofloxacin 750mg IV once daily for 5 days; Lisinopril 10mg PO once daily; Amlodipine 5mg PO once daily; Aspirin 81mg PO once daily
+NTE|4||SEVERITY: MEDIUM-HIGH - Left upper lobe consolidation, comorbid hypertension, fever >38°C, normal oxygen saturation
+NTE|5||DISCHARGE SUMMARY: Male patient with lobar pneumonia and existing hypertension. Imaging shows left upper lobe involvement. Comorbidities managed. Hospitalization for IV antibiotics. Close monitoring for cardiac complications.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||13.2|K/uL|4.5-11.0|H|||||F|||20260204113935
+OBX|9|NM|718-7^Hemoglobin^LN||14.2|g/dL|13.5-17.5|N|||||F|||20260204113935
+OBX|10|NM|777-3^Platelet Count^LN||310|K/uL|150-400|N|||||F|||20260204113935
+OBX|11|NM|30522-7^C-Reactive Protein^LN||35.8|mg/L|<10|H|||||F|||20260204113935
+OBX|12|NM|33959-8^Procalcitonin^LN||1.3|ng/mL|<0.5|H|||||F|||20260204113935

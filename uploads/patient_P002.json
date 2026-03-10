@@ -1,0 +1,55 @@
+{
+  "resourceType": "Patient",
+  "id": "P002",
+  "name": [
+    {
+      "use": "official",
+      "text": "Maria Garcia"
+    }
+  ],
+  "birthDate": "1975-07-22",
+  "gender": "female",
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-1234"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "line": [
+        "123 Main Street"
+      ],
+      "city": "Springfield",
+      "state": "IL",
+      "postalCode": "62701"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "C",
+              "display": "Emergency Contact"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "Emergency Contact"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "555-9999"
+        }
+      ]
+    }
+  ],
+  "diagnosis": "Lung Nodule",
+  "lastUpdated": "2026-02-04T11:24:26.441731"
+}

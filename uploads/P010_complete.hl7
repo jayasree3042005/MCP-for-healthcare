@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113940||ADT^A01|MSG010|P|2.5
+EVN|A01|20260204113940
+PID|1||P010^^^HOSPITAL||Anderson^Margaret||19740611|F|||741 Walnut Way^Austin^TX^78701^^^^C||+1-555-0110^PH^^^1~margaret.anderson@email.com^E
+NK1|1|James Anderson|HUS||+1-555-0009
+OBX|1|NM|8867-4^Heart rate^LN||79|beats/minute|||||F|||20260204112435
+OBX|2|NM|8480-6^Systolic blood pressure^LN||122|mmHg|||||F|||20260204112435
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||77|mmHg|||||F|||20260204112435
+OBX|4|NM|59408-5^Oxygen saturation^LN||97|%|||||F|||20260204112435
+OBX|5|NM|8310-5^Body temperature^LN||38.1|Cel|||||F|||20260204112435
+OBX|6|NM|29463-7^Body weight^LN||75|kg|||||F|||20260204112435
+OBX|7|NM|8302-2^Body height^LN||172|cm|||||F|||20260204112435
+DG1|1|ICD10|J15.9^^ICD-10-CM|Bacterial pneumonia unspecified|||||||||||||M
+DG1|2|ICD10|R05.00^^ICD-10-CM|Fever|||||||||||||L
+PR1|1|1234576|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Right middle lobe consolidation. No pleural effusion. Heart size normal. Minimal findings.
+NTE|2||IMPRESSION: Uncomplicated bacterial pneumonia of right middle lobe. Good prognosis with appropriate antibiotics.
+NTE|3||MEDICATIONS: Amoxicillin-Clavulanic Acid 875mg PO BID for 7 days; Ibuprofen 400mg PO TID for pain; Diphenhydramine 25mg PO at bedtime for rest; Multivitamin daily
+NTE|4||SEVERITY: LOW-MEDIUM - Single lobe consolidation, mild fever <38.5°C, excellent oxygen saturation, good vital signs, minimal symptoms
+NTE|5||DISCHARGE SUMMARY: Female patient with uncomplicated bacterial pneumonia of right middle lobe. Imaging shows limited involvement. Good clinical condition and vital signs. Discharged on oral antibiotics with clear follow-up plan. Expected recovery in 2-3 weeks with good prognosis.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||12.5|K/uL|4.5-11.0|H|||||F|||20260204113940
+OBX|9|NM|718-7^Hemoglobin^LN||13.9|g/dL|12.0-16.0|N|||||F|||20260204113940
+OBX|10|NM|777-3^Platelet Count^LN||330|K/uL|150-400|N|||||F|||20260204113940
+OBX|11|NM|30522-7^C-Reactive Protein^LN||28.3|mg/L|<10|H|||||F|||20260204113940
+OBX|12|NM|33959-8^Procalcitonin^LN||1.0|ng/mL|<0.5|H|||||F|||20260204113940

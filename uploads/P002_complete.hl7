@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113932||ADT^A01|MSG002|P|2.5
+EVN|A01|20260204113932
+PID|1||P002^^^HOSPITAL||Johnson^Mary||19752108|F|||456 Oak Avenue^Chicago^IL^60601^^^^C||+1-555-0102^PH^^^1~mary.johnson@email.com^E
+NK1|1|Sarah Johnson|SIS||+1-555-0001
+OBX|1|NM|8867-4^Heart rate^LN||92|beats/minute|||||F|||20260204112427
+OBX|2|NM|8480-6^Systolic blood pressure^LN||128|mmHg|||||F|||20260204112427
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||82|mmHg|||||F|||20260204112427
+OBX|4|NM|59408-5^Oxygen saturation^LN||92|%|||||F|||20260204112427
+OBX|5|NM|8310-5^Body temperature^LN||39.2|Cel|||||F|||20260204112427
+OBX|6|NM|29463-7^Body weight^LN||65|kg|||||F|||20260204112427
+OBX|7|NM|8302-2^Body height^LN||165|cm|||||F|||20260204112427
+DG1|1|ICD10|J20.9^^ICD-10-CM|Acute bronchitis|||||||||||||H
+DG1|2|ICD10|R06.02^^ICD-10-CM|Tachypnea|||||||||||||M
+PR1|1|1234568|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Right lower lobe infiltrate. Hyperinflation. No significant pleural effusion.
+NTE|2||IMPRESSION: Acute bronchitis with right lower lobe involvement. Patient shows signs of respiratory distress.
+NTE|3||MEDICATIONS: Azithromycin 500mg PO once daily for 5 days; Albuterol inhaler 2 puffs Q4-6H PRN; Ibuprofen 400mg PO TID for pain; Dextromethorphan 10mg PO TID for cough
+NTE|4||SEVERITY: HIGH - Fever >39°C, tachypnea, low oxygen saturation at 92%, respiratory distress noted
+NTE|5||DISCHARGE SUMMARY: Female patient admitted with acute bronchitis. Imaging confirms lower lobe involvement. Prescribed bronchodilators and antibiotics. Advised rest and follow-up in 3 days.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||14.8|K/uL|4.5-11.0|H|||||F|||20260204113932
+OBX|9|NM|718-7^Hemoglobin^LN||13.2|g/dL|12.0-16.0|N|||||F|||20260204113932
+OBX|10|NM|777-3^Platelet Count^LN||280|K/uL|150-400|N|||||F|||20260204113932
+OBX|11|NM|30522-7^C-Reactive Protein^LN||38.5|mg/L|<10|H|||||F|||20260204113932
+OBX|12|NM|33959-8^Procalcitonin^LN||1.8|ng/mL|<0.5|H|||||F|||20260204113932

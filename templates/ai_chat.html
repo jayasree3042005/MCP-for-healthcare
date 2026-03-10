@@ -1,0 +1,472 @@
+{% extends 'base.html' %}
+{% block title %}AI Chat - Medihosp Dashboard{% endblock %}
+{% block content %}
+  <main class="main-content">
+      <div class="upload-section">
+        <!-- Header -->
+        <div class="section-header" style="margin-bottom: 30px;">
+          <i class="fas fa-robot" style="font-size: 2.5rem; color: #667eea; margin-bottom: 10px;"></i>
+          <h2>Medical AI Assistant</h2>
+          <p style="color: #718096;">Ask questions about patient medical records and get instant answers</p>
+        </div>
+
+        <!-- Two-column layout: Sidebar + Chat -->
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 30px;">
+          <!-- Sidebar -->
+          <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <!-- Patient Selector -->
+            <div style="margin-bottom: 25px;">
+              <label for="patientSelect" style="display: block; font-size: 0.9rem; font-weight: 600; color: #2d3748; margin-bottom: 8px;">
+                <i class="fas fa-user-circle" style="margin-right: 6px; color: #667eea;"></i>
+                Select Patient
+              </label>
+              <select id="patientSelect" onchange="selectPatient()" style="width: 100%; padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem; color: #2d3748; font-family: 'Inter', sans-serif; background-color: #ffffff; cursor: pointer;">
+                <option value="">-- Choose a Patient --</option>
+                {% for patient in patients %}
+                  <option value="{{ patient.id }}">{{ patient.name }} ({{ patient.id }})</option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+
+            <!-- New Chat Button -->
+            <button id="newChatBtn" style="width: 100%; padding: 10px 16px; background: #667eea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; margin-bottom: 25px; transition: all 0.3s ease;">
+              <i class="fas fa-plus"></i> New Chat
+            </button>
+
+            <!-- Quick Questions -->
+            <div>
+              <h4 style="font-size: 0.85rem; font-weight: 700; color: #2d3748; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px;">Quick Questions</h4>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="nav-link" onclick="askQuestion('What are the key findings in this patient report?')" style="text-align: left; background: rgba(102, 126, 234, 0.08); color: #667eea; border: none; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s ease;">
+                  <i class="fas fa-question-circle"></i> Key Findings
+                </button>
+                <button class="nav-link" onclick="askQuestion('What diagnoses are mentioned?')" style="text-align: left; background: rgba(102, 126, 234, 0.08); color: #667eea; border: none; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s ease;">
+                  <i class="fas fa-stethoscope"></i> Diagnoses
+                </button>
+                <button class="nav-link" onclick="askQuestion('What are the recommended treatments?')" style="text-align: left; background: rgba(102, 126, 234, 0.08); color: #667eea; border: none; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s ease;">
+                  <i class="fas fa-prescription-bottle"></i> Treatments
+                </button>
+                <button class="nav-link" onclick="askQuestion('Are there any concerning findings?')" style="text-align: left; background: rgba(102, 126, 234, 0.08); color: #667eea; border: none; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s ease;">
+                  <i class="fas fa-exclamation-triangle"></i> Concerns
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Area -->
+          <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; height: 600px;">
+            <!-- Chat Header -->
+            <div style="padding-bottom: 15px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px;">
+              <p id="patientInfo" style="margin: 0; font-weight: 600; color: #718096; font-size: 0.9rem;">
+                <i class="fas fa-info-circle" style="margin-right: 8px; color: #667eea;"></i>
+                Select a patient to begin chatting
+              </p>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="chat-messages" id="chatMessages" style="flex: 1; overflow-y: auto; margin-bottom: 20px; padding-right: 10px;">
+              <div class="message system-message" style="display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;">
+                <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+                <div style="background: rgba(102, 126, 234, 0.08); padding: 12px 16px; border-radius: 12px; flex: 1;">
+                  <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">AI Assistant</p>
+                  <p style="margin: 0; font-size: 0.9rem; color: #4a5568; line-height: 1.4;">Welcome! Select a patient from the sidebar and ask me questions about their medical records. I can help you understand diagnoses, findings, treatments, and more.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Area -->
+            <div style="border-top: 2px solid #e2e8f0; padding-top: 20px;">
+              <!-- Chat Input -->
+              <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="chatInput" placeholder="Ask about the patient's diagnosis, findings, or treatment..." onkeypress="handleEnter(event)" style="flex: 1; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem; color: #2d3748; font-family: 'Inter', sans-serif; transition: all 0.2s ease;">
+                <button id="sendBtn" onclick="sendMessage()" style="padding: 12px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease;">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+
+              <!-- File Upload -->
+              <div style="display: none; align-items: center; gap: 10px;">
+                <input type="file" id="reportImageInput" accept="image/*,.dcm" style="display: none;">
+                <button onclick="document.getElementById('reportImageInput').click()" style="flex: 1; padding: 10px 16px; background: rgba(72, 187, 120, 0.1); color: #48bb78; border: 2px solid #48bb78; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease;">
+                  <i class="fas fa-upload"></i> Upload Report Image
+                </button>
+              </div>
+              <small style="display: none; margin-top: 8px; color: #a0aec0; font-size: 0.8rem;">Upload X-ray/CT or report image for automated analysis</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer note -->
+        <div style="margin-top: 30px; padding: 15px 20px; background: rgba(192, 88, 33, 0.08); border-left: 4px solid #c05821; border-radius: 8px;">
+          <small style="color: #744210; font-weight: 500;">
+            <i class="fas fa-lightbulb"></i> AI powered by advanced medical analysis. Always consult with medical professionals for final decisions.
+          </small>
+        </div>
+      </div>
+    </main>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    let selectedPatientId = null;
+    let selectedPatientData = null;
+    let primaryDicomImage = null;
+    let chatHistory = [];
+    let dicomImageDisplayed = false;
+
+    // Load DICOM image automatically for selected patient
+    async function loadPatientPrimaryDicom(patientId) {
+      try {
+        const response = await fetch(`/api/patient-primary-dicom/${patientId}`);
+        const data = await response.json();
+        
+        if (data.success && data.dicom) {
+          primaryDicomImage = data.dicom;
+        } else {
+          primaryDicomImage = null;
+        }
+        dicomImageDisplayed = false; // Reset flag when patient changes
+      } catch (error) {
+        console.error('Error loading DICOM image:', error);
+        primaryDicomImage = null;
+      }
+    }
+
+
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const newBtn = document.getElementById('newChatBtn');
+      if (newBtn) {
+        newBtn.addEventListener('mouseover', function() {
+          this.style.background = '#5568d3';
+          this.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+        });
+        newBtn.addEventListener('mouseout', function() {
+          this.style.background = '#667eea';
+          this.style.boxShadow = 'none';
+        });
+
+        newBtn.addEventListener('click', () => {
+          if (!selectedPatientId) return alert('Select a patient first');
+          if (confirm('Clear chat history for this patient?')) {
+            localStorage.removeItem('chat_history_' + selectedPatientId);
+            chatHistory = [];
+            dicomImageDisplayed = false;
+            document.getElementById('chatMessages').innerHTML = `
+              <div class="message system-message" style="display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;">
+                <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+                <div style="background: rgba(102, 126, 234, 0.08); padding: 12px 16px; border-radius: 12px; flex: 1;">
+                  <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">AI Assistant</p>
+                  <p style="margin: 0; font-size: 0.9rem; color: #4a5568;">Chat cleared. Start a new conversation.</p>
+                </div>
+              </div>
+            `;
+          }
+        });
+      }
+
+      const quickBtns = document.querySelectorAll('[onclick*="askQuestion"]');
+      quickBtns.forEach(btn => {
+        btn.addEventListener('mouseover', function() {
+          this.style.background = 'rgba(102, 126, 234, 0.15)';
+          this.style.borderColor = '#667eea';
+        });
+        btn.addEventListener('mouseout', function() {
+          this.style.background = 'rgba(102, 126, 234, 0.08)';
+        });
+      });
+
+      const sendBtn = document.getElementById('sendBtn');
+      if (sendBtn) {
+        sendBtn.addEventListener('mouseover', function() {
+          this.style.background = '#5568d3';
+          this.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+        });
+        sendBtn.addEventListener('mouseout', function() {
+          this.style.background = '#667eea';
+          this.style.boxShadow = 'none';
+        });
+      }
+
+      const last = localStorage.getItem('last_selected_patient');
+      if (last) {
+        const sel = document.getElementById('patientSelect');
+        if (sel) {
+          sel.value = last;
+          selectPatient();
+        }
+      }
+    });
+
+    function selectPatient() {
+      selectedPatientId = document.getElementById('patientSelect').value;
+      
+      if (selectedPatientId) {
+        document.getElementById('patientInfo').innerHTML = '<i class="fas fa-check-circle" style="margin-right: 8px; color: #48bb78;"></i> Patient selected - Ready to ask questions';
+        localStorage.setItem('last_selected_patient', selectedPatientId);
+        loadChatHistory(selectedPatientId);
+        loadPatientPrimaryDicom(selectedPatientId);
+      } else {
+        document.getElementById('patientInfo').innerHTML = '<i class="fas fa-info-circle" style="margin-right: 8px; color: #667eea;"></i> Select a patient to begin chatting';
+      }
+    }
+
+    function loadChatHistory(patientId) {
+      const raw = localStorage.getItem('chat_history_' + patientId);
+      chatHistory = raw ? JSON.parse(raw) : [];
+      const messagesDiv = document.getElementById('chatMessages');
+      messagesDiv.innerHTML = '';
+      if (!chatHistory || chatHistory.length === 0) {
+        messagesDiv.innerHTML = `
+          <div class="message system-message" style="display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;">
+            <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+            <div style="background: rgba(102, 126, 234, 0.08); padding: 12px 16px; border-radius: 12px; flex: 1;">
+              <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">AI Assistant</p>
+              <p style="margin: 0; font-size: 0.9rem; color: #4a5568;">No previous conversations. Ask your first question!</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      renderChatFromHistory(chatHistory);
+      dicomImageDisplayed = true;
+    }
+
+    function renderChatFromHistory(history) {
+      const messagesDiv = document.getElementById('chatMessages');
+      messagesDiv.innerHTML = '';
+      history.forEach(item => {
+        const el = document.createElement('div');
+        const isStructured = item.content.includes('======') || item.content.includes('🩺') || item.content.includes('📋');
+        
+        if (item.role === 'user') {
+          el.className = 'message';
+          el.style.cssText = 'display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; justify-content: flex-end;';
+          el.innerHTML = `
+            <div style="background: #667eea; color: white; padding: 12px 16px; border-radius: 12px; max-width: 70%; word-wrap: break-word;">
+              <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">${escapeHtml(item.content)}</p>
+            </div>
+            <i class="fas fa-user" style="color: #667eea; margin-top: 4px;"></i>
+          `;
+        } else {
+          el.className = 'message';
+          el.style.cssText = 'display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;';
+          
+          if (isStructured) {
+            el.innerHTML = `
+              <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+              <div style="background: rgba(102, 126, 234, 0.08); padding: 16px; border-radius: 12px; flex: 1; word-wrap: break-word;">
+                <p style="margin: 0 0 12px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">Clinical Summary</p>
+                <pre style="margin: 0; font-size: 0.85rem; color: #2d3748; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; background: white; padding: 12px; border-radius: 6px; max-height: 500px; overflow-y: auto;">${escapeHtml(item.content)}</pre>
+              </div>
+            `;
+          } else {
+            el.innerHTML = `
+              <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+              <div style="background: rgba(102, 126, 234, 0.08); padding: 12px 16px; border-radius: 12px; flex: 1; word-wrap: break-word;">
+                <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">AI Assistant</p>
+                <p style="margin: 0; font-size: 0.9rem; color: #4a5568; line-height: 1.4;">${escapeHtml(item.content)}</p>
+              </div>
+            `;
+          }
+        }
+        messagesDiv.appendChild(el);
+      });
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function askQuestion(question) {
+      const input = document.getElementById('chatInput');
+      input.value = question;
+      input.focus();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      if (!message || !selectedPatientId) {
+        if (!selectedPatientId) alert('Please select a patient first');
+        return;
+      }
+      
+      addMessage('user', message);
+      input.value = '';
+
+      // Determine if the user explicitly requested to see the DICOM image
+      const showImageRequested = /dicom|image|scan|x-ray|ct|mri|show image|show dicom/i.test(message);
+
+      const payload = { 
+        patient_id: selectedPatientId, 
+        question: message, 
+        history: chatHistory,
+        request_image: showImageRequested
+      };
+      
+      fetch('/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(data => {
+          if (data.success) {
+          addMessage('ai', data.response);
+          
+          // Display DICOM only if it was explicitly requested by the user
+          if (showImageRequested && !dicomImageDisplayed && primaryDicomImage && primaryDicomImage.instance_id) {
+            displayDicomInChat(primaryDicomImage);
+            dicomImageDisplayed = true;
+          }
+          
+          // addMessage will handle pushing and persisting history
+        } else {
+          addMessage('ai', 'Error: ' + (data.error || 'Unknown error'));
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        addMessage('ai', 'Connection error. Please try again.');
+      });
+    }
+    
+    function displayDicomInChat(dicomInfo) {
+      const messagesDiv = document.getElementById('chatMessages');
+      const imageEl = document.createElement('div');
+      imageEl.style.cssText = 'display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;';
+      
+      // Use explicit image_url if provided by the server (handles local files vs Orthanc)
+      const imageUrl = dicomInfo.image_url || `/api/orthanc-dicom-image/${dicomInfo.instance_id}?format=png`;
+
+      imageEl.innerHTML = `
+        <i class="fas fa-image" style="color: #667eea; margin-top: 4px;"></i>
+        <div style="background: rgba(102, 126, 234, 0.08); padding: 16px; border-radius: 12px; flex: 1;">
+          <p style="margin: 0 0 12px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">🖼 DICOM IMAGE</p>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <img src="${imageUrl}" 
+                 alt="Patient DICOM Image" 
+                 style="max-width: 100%; max-height: 400px; border-radius: 6px; object-fit: contain;" 
+                 onerror="this.src='/static/no-image.png'" />
+            <p style="margin: 12px 0 0 0; font-size: 0.8rem; color: #718096;">
+              <strong>${dicomInfo.modality || 'Medical Image'}</strong> | ${dicomInfo.study_date || 'Date unknown'}
+            </p>
+          </div>
+        </div>
+      `;
+      messagesDiv.appendChild(imageEl);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function addMessage(role, content) {
+      const messagesDiv = document.getElementById('chatMessages');
+      const messageEl = document.createElement('div');
+      messageEl.className = 'message';
+      
+      const isStructured = content.includes('======') || content.includes('🩺') || content.includes('📋');
+      
+      if (role === 'user') {
+        messageEl.style.cssText = 'display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; justify-content: flex-end;';
+        messageEl.innerHTML = `
+          <div style="background: #667eea; color: white; padding: 12px 16px; border-radius: 12px; max-width: 70%; word-wrap: break-word;">
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">${escapeHtml(content)}</p>
+          </div>
+          <i class="fas fa-user" style="color: #667eea; margin-top: 4px;"></i>
+        `;
+      } else {
+        messageEl.style.cssText = 'display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start;';
+        
+        let contentHtml;
+        if (isStructured) {
+          contentHtml = `
+            <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+            <div style="background: rgba(102, 126, 234, 0.08); padding: 16px; border-radius: 12px; flex: 1; word-wrap: break-word;">
+              <p style="margin: 0 0 12px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">Clinical Summary</p>
+              <pre style="margin: 0; font-size: 0.85rem; color: #2d3748; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; background: white; padding: 12px; border-radius: 6px; max-height: 500px; overflow-y: auto;">${escapeHtml(content)}</pre>
+            </div>
+          `;
+        } else {
+          contentHtml = `
+            <i class="fas fa-robot" style="color: #667eea; margin-top: 4px;"></i>
+            <div style="background: rgba(102, 126, 234, 0.08); padding: 12px 16px; border-radius: 12px; flex: 1; word-wrap: break-word;">
+              <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem; color: #2d3748;">AI Assistant</p>
+              <p style="margin: 0; font-size: 0.9rem; color: #4a5568; line-height: 1.4;">${escapeHtml(content)}</p>
+            </div>
+          `;
+        }
+        
+        messageEl.innerHTML = contentHtml;
+      }
+      
+      messagesDiv.appendChild(messageEl);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+      if (role === 'user' || role === 'ai') {
+        chatHistory.push({role: role, content: content});
+        if (selectedPatientId) localStorage.setItem('chat_history_' + selectedPatientId, JSON.stringify(chatHistory));
+      }
+    }
+    
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    function handleEnter(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const fileInput = document.getElementById('reportImageInput');
+      if (fileInput) {
+        fileInput.addEventListener('change', uploadReportImage);
+      }
+    });
+
+    function uploadReportImage() {
+      if (!selectedPatientId) {
+        alert('Please select a patient first');
+        return;
+      }
+      const input = document.getElementById('reportImageInput');
+      if (!input.files || input.files.length === 0) {
+        alert('Please select an image file to upload');
+        return;
+      }
+      const file = input.files[0];
+      const form = new FormData();
+      form.append('patient_id', selectedPatientId);
+      form.append('image', file);
+
+      addMessage('user', `Uploaded image: ${file.name}`);
+      fetch('/analyze-image', {
+        method: 'POST',
+        body: form
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          addMessage('ai', data.analysis_text);
+        } else {
+          addMessage('ai', 'Error analyzing image: ' + (data.error || 'Unknown'));
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        addMessage('ai', 'Image upload failed.');
+      });
+    }
+  </script>
+{% endblock %}

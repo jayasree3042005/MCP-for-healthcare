@@ -1,0 +1,95 @@
+{
+  "resourceType": "Patient",
+  "id": "P004",
+  "name": [
+    {
+      "use": "official",
+      "text": "Jennifer Lee",
+      "family": "Lee",
+      "given": [
+        "Jennifer"
+      ]
+    }
+  ],
+  "birthDate": "1960-05-30",
+  "gender": "female",
+  "age": 65,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0104"
+    },
+    {
+      "system": "email",
+      "value": "jennifer.lee@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "321 Elm Street, New York, NY 10001",
+      "line": [
+        "321 Elm Street"
+      ],
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "David Lee"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "Chest Pain",
+    "modality": "CT",
+    "riskLevel": "High",
+    "anomalies": [
+      "Coronary artery calcification",
+      "Possible angina",
+      "Elevated troponin"
+    ],
+    "treatment": "Cardiology consultation required",
+    "medications": [
+      {
+        "name": "Atorvastatin",
+        "dosage": "20mg",
+        "frequency": "Once daily",
+        "duration": "Ongoing"
+      },
+      {
+        "name": "Lisinopril",
+        "dosage": "10mg",
+        "frequency": "Once daily",
+        "duration": "Ongoing"
+      },
+      {
+        "name": "Nitroglycerin",
+        "dosage": "0.4mg",
+        "frequency": "As needed",
+        "duration": "For chest pain"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.934209"
+  }
+}

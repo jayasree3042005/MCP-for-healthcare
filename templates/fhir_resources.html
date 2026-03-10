@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}FHIR Resources{% endblock %}
+{% block content %}
+  <main class="main-content">
+    {% if resources %}
+            <!-- Patients Section -->
+            <div class="resource-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i> Patients ({{ resources.patients|length }})</h2>
+                </div>
+                <div class="resource-grid">
+                    {% for patient in resources.patients %}
+                    <div class="resource-card">
+                        <div class="resource-header">
+                            <i class="fas fa-user"></i>
+                            <h3>{{ patient.id }}</h3>
+                        </div>
+                        <div class="resource-content">
+                            <p><strong>Name:</strong> 
+                                {% if patient.name and patient.name|length > 0 %}
+                                    {{ patient.name[0].given|join(' ') if patient.name[0].given else '' }} {{ patient.name[0].family if patient.name[0].family else '' }}
+                                {% else %}
+                                    Unknown
+                                {% endif %}
+                            </p>
+                            <p><strong>Gender:</strong> {{ patient.gender|default('Unknown') }}</p>
+                            <p><strong>Status:</strong> 
+                                <span class="status-badge {{ 'active' if patient.active else 'inactive' }}">
+                                    {{ 'Active' if patient.active else 'Inactive' }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="resource-actions">
+                            <a href="{{ url_for('view_single_fhir_resource', resource_type='Patient', resource_id=patient.id) }}" class="btn-view">
+                                <i class="fas fa-eye"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Observations Section -->
+            <div class="resource-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-list"></i> Observations ({{ resources.observations|length }})</h2>
+                </div>
+                <div class="resource-grid">
+                    {% for observation in resources.observations %}
+                    <div class="resource-card">
+                        <div class="resource-header">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>{{ observation.id }}</h3>
+                        </div>
+                        <div class="resource-content">
+                            <p><strong>Status:</strong> {{ observation.status }}</p>
+                            <p><strong>Code:</strong> {{ observation.code.text if observation.code.text else observation.code.coding[0].display if observation.code.coding else 'Unknown' }}</p>
+                            <p><strong>Patient:</strong> {{ observation.subject.reference if observation.subject else 'Unknown' }}</p>
+                            <p><strong>Value:</strong> {{ observation.valueString[:100] if observation.valueString else 'No value' }}{{ '...' if observation.valueString and observation.valueString|length > 100 else '' }}</p>
+                        </div>
+                        <div class="resource-actions">
+                            <a href="{{ url_for('view_single_fhir_resource', resource_type='Observation', resource_id=observation.id) }}" class="btn-view">
+                                <i class="fas fa-eye"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Diagnostic Reports Section -->
+            <div class="resource-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-medical"></i> Diagnostic Reports ({{ resources.diagnostic_reports|length }})</h2>
+                </div>
+                <div class="resource-grid">
+                    {% for report in resources.diagnostic_reports %}
+                    <div class="resource-card">
+                        <div class="resource-header">
+                            <i class="fas fa-file-medical"></i>
+                            <h3>{{ report.id }}</h3>
+                        </div>
+                        <div class="resource-content">
+                            <p><strong>Status:</strong> {{ report.status }}</p>
+                            <p><strong>Code:</strong> {{ report.code.text if report.code.text else report.code.coding[0].display if report.code.coding else 'Unknown' }}</p>
+                            <p><strong>Patient:</strong> {{ report.subject.reference if report.subject else 'Unknown' }}</p>
+                            <p><strong>Conclusion:</strong> {{ report.conclusion[:100] if report.conclusion else 'No conclusion' }}{{ '...' if report.conclusion and report.conclusion|length > 100 else '' }}</p>
+                        </div>
+                        <div class="resource-actions">
+                            <a href="{{ url_for('view_single_fhir_resource', resource_type='DiagnosticReport', resource_id=report.id) }}" class="btn-view">
+                                <i class="fas fa-eye"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+                </div>
+        {% else %}
+            <div class="empty-state">
+            <i class="fas fa-database"></i>
+            <h2>No FHIR Resources Found</h2>
+            <p>No converted FHIR resources are available. Upload and convert some HL7 files first.</p>
+            <a href="{{ url_for('index') }}" class="btn-primary">
+                <i class="fas fa-upload"></i> Upload Files
+            </a>
+        </div>
+                                {% endif %}
+    </main>
+{% endblock %}

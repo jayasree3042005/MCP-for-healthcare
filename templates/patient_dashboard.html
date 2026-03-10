@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Styles moved to static/styles.css -->
+        <!-- Header Navigation -->
+        <div style="margin-bottom: 20px;">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="{{ url_for('fhir_resources') }}" class="btn btn-secondary" style="margin-left: 10px;">
+                <i class="fas fa-list"></i> All Resources
+            </a>
+        </div>
+
+        <!-- Patient Header -->
+        <div class="patient-header">
+            <div class="patient-info">
+                <h1>{{ patient.name }}</h1>
+                <div class="patient-details">
+                    <div><strong>Patient ID:</strong> {{ patient.id }}</div>
+                    <div><strong>Age:</strong> {{ patient.age }}</div>
+                    <div><strong>Gender:</strong> {{ patient.gender }}</div>
+                    <div><strong>DOB:</strong> {{ patient.dob }}</div>
+                    <div><strong>Phone:</strong> {{ patient.phone }}</div>
+                    <div><strong>Email:</strong> {{ patient.email }}</div>
+                </div>
+                {% if patient.severity %}
+                <div>
+                    <span class="severity-badge severity-{{ patient.severity|lower }}">
+                        {{ patient.severity }} SEVERITY
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 0.9em; opacity: 0.9;">
+                    <div><strong>Record Created:</strong><br>{{ patient.created_date }}</div>
+                    <div style="margin-top: 20px;"><strong>Last Updated:</strong><br>{{ patient.updated_date }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vital Signs -->
+        {% if patient.vital_signs %}
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-heartbeat"></i>
+                <h2>Vital Signs</h2>
+            </div>
+            <div class="vital-signs-grid">
+                {% for vs in patient.vital_signs %}
+                <div class="vital-sign {% if vs.abnormal %}abnormal{% elif vs.warning %}warning{% endif %}">
+                    <div class="vital-sign-label">{{ vs.name }}</div>
+                    <div class="vital-sign-value">{{ vs.value }}</div>
+                    <div class="vital-sign-unit">{{ vs.unit }}</div>
+                    {% if vs.reference %}
+                    <div style="font-size: 0.8em; color: #666; margin-top: 5px;">Ref: {{ vs.reference }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Lab Results -->
+        {% if patient.lab_results %}
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-flask"></i>
+                <h2>Lab Results</h2>
+            </div>
+            <table class="lab-results-table">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Value</th>
+                        <th>Unit</th>
+                        <th>Reference Range</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lab in patient.lab_results %}
+                    <tr>
+                        <td>{{ lab.name }}</td>
+                        <td><strong>{{ lab.value }}</strong></td>
+                        <td>{{ lab.unit }}</td>
+                        <td>{{ lab.reference }}</td>
+                        <td>
+                            <span class="lab-status lab-{{ lab.status|lower }}">
+                                {{ lab.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div class="content-grid">
+            <!-- Diagnoses -->
+            {% if patient.diagnoses %}
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-stethoscope"></i>
+                    <h2>Diagnoses</h2>
+                </div>
+                {% for dx in patient.diagnoses %}
+                <div class="diagnosis-item">
+                    <div class="diagnosis-code">{{ dx.code }}</div>
+                    <div class="diagnosis-description">{{ dx.description }}</div>
+                    {% if dx.severity %}
+                    <div style="font-size: 0.85em; color: #666;">Severity: {{ dx.severity }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Medications -->
+            {% if patient.medications %}
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-pills"></i>
+                    <h2>Medications</h2>
+                </div>
+                {% for med in patient.medications %}
+                <div class="medication-item">
+                    <div class="medication-name">{{ med.name }}</div>
+                    <div class="medication-details">
+                        <div><strong>Dose:</strong> {{ med.dose }}</div>
+                        <div><strong>Route:</strong> {{ med.route }}</div>
+                        <div><strong>Frequency:</strong> {{ med.frequency }}</div>
+                        <div><strong>Duration:</strong> {{ med.duration }}</div>
+                        {% if med.indication %}
+                        <div><strong>Indication:</strong> {{ med.indication }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Clinical Findings -->
+        {% if patient.findings %}
+        <div class="card">
+            <div class="findings-section">
+                <h3><i class="fas fa-microscope"></i> Clinical Findings</h3>
+                <p>{{ patient.findings }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Impression -->
+        {% if patient.impression %}
+        <div class="card">
+            <div class="impression-section">
+                <h3><i class="fas fa-brain"></i> Clinical Impression</h3>
+                <p>{{ patient.impression }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- DICOM Images -->
+        {% if patient.dicom_images %}
+        <div class="card dicom-section">
+            <div class="card-header">
+                <i class="fas fa-image"></i>
+                <h2>DICOM Images ({{ patient.dicom_images|length }})</h2>
+            </div>
+            <div class="dicom-grid">
+                {% for dicom in patient.dicom_images %}
+                <div class="dicom-image-card" onclick="openDICOMModal('{{ dicom.filename }}', '{{ dicom.study_uid }}', '{{ dicom.series_uid }}', '{{ dicom.instance_uid }}')">
+                    <div class="dicom-preview" id="preview-{{ dicom.instance_uid }}">
+                        <i class="fas fa-spinner fa-spin"></i> Loading...
+                    </div>
+                    <div class="dicom-info">
+                        <div class="dicom-filename">{{ dicom.filename }}</div>
+                        <div class="dicom-details">
+                            <div><strong>Modality:</strong> {{ dicom.modality }}</div>
+                            <div><strong>Date:</strong> {{ dicom.date }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="{{ url_for('fhir_resources') }}" class="btn btn-secondary">
+                <i class="fas fa-list"></i> All Resources
+            </a>
+        </div>
+    </div>
+
+    <!-- DICOM Modal -->
+    <div id="dicomModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalFilename"></span>
+                <button class="close-btn" onclick="closeDICOMModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="DICOM Image">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDICOMModal(filename, study_uid, series_uid, instance_uid) {
+            const modal = document.getElementById('dicomModal');
+            const modalFilename = document.getElementById('modalFilename');
+            const modalImage = document.getElementById('modalImage');
+            
+            modalFilename.textContent = filename;
+            modalImage.src = `/get-dicom-image/${study_uid}/${series_uid}/${instance_uid}`;
+            modal.style.display = 'block';
+        }
+        
+        function closeDICOMModal() {
+            document.getElementById('dicomModal').style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('dicomModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Load DICOM thumbnails
+        document.querySelectorAll('.dicom-image-card').forEach(card => {
+            const instanceUid = card.getAttribute('onclick').match(/'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)'/)[4];
+            const previewDiv = card.querySelector('.dicom-preview');
+            const studyUid = card.getAttribute('onclick').match(/'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)'/)[2];
+            const seriesUid = card.getAttribute('onclick').match(/'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)'/)[3];
+            
+            fetch(`/get-dicom-image/${studyUid}/${seriesUid}/${instanceUid}?thumbnail=true`)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+                    previewDiv.innerHTML = `<img src="${url}" alt="DICOM Preview">`;
+                })
+                .catch(error => {
+                    previewDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Image unavailable';
+                    console.error('Error loading DICOM thumbnail:', error);
+                });
+        });
+    </script>
+</body>
+</html>

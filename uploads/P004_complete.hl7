@@ -1,0 +1,25 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113934||ADT^A01|MSG004|P|2.5
+EVN|A01|20260204113934
+PID|1||P004^^^HOSPITAL||Brown^Patricia||19800422|F|||321 Elm Street^Houston^TX^77001^^^^C||+1-555-0104^PH^^^1~patricia.brown@email.com^E
+NK1|1|Michael Brown|HUS||+1-555-0003
+OBX|1|NM|8867-4^Heart rate^LN||98|beats/minute|||||F|||20260204112429
+OBX|2|NM|8480-6^Systolic blood pressure^LN||132|mmHg|||||F|||20260204112429
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||80|mmHg|||||F|||20260204112429
+OBX|4|NM|59408-5^Oxygen saturation^LN||91|%|||||F|||20260204112429
+OBX|5|NM|8310-5^Body temperature^LN||39.5|Cel|||||F|||20260204112429
+OBX|6|NM|29463-7^Body weight^LN||70|kg|||||F|||20260204112429
+OBX|7|NM|8302-2^Body height^LN||170|cm|||||F|||20260204112429
+DG1|1|ICD10|J16.9^^ICD-10-CM|Pneumonia caused by unspecified organism|||||||||||||H
+DG1|2|ICD10|R05.9^^ICD-10-CM|Fever unspecified|||||||||||||H
+DG1|3|ICD10|J96.00^^ICD-10-CM|Unspecified acute respiratory failure|||||||||||||H
+PR1|1|1234570|99214^^CPT|Chest CT Scan|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Extensive bilateral consolidation affecting >50% of lung volume. Septal thickening. Pleural effusion bilaterally.
+NTE|2||IMPRESSION: Severe community-acquired pneumonia with critical findings. Requires aggressive treatment. Consider ICU admission.
+NTE|3||MEDICATIONS: Ceftriaxone 2g IV Q12H; Azithromycin 500mg IV once daily; Methylprednisolone 125mg IV Q6H; Heparin 5000 units SQ Q8H; Oxygen therapy with high-flow support
+NTE|4||SEVERITY: CRITICAL - Extensive bilateral consolidation, high fever >39.5°C, low oxygen saturation <91%, respiratory compromise, septal edema
+NTE|5||DISCHARGE SUMMARY: Female patient with severe pneumonia requiring ICU-level care. Extensive imaging shows critical involvement. Currently on ventilatory support. Prognosis guarded. Family counseling provided.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||18.5|K/uL|4.5-11.0|H|||||F|||20260204113934
+OBX|9|NM|718-7^Hemoglobin^LN||11.8|g/dL|12.0-16.0|L|||||F|||20260204113934
+OBX|10|NM|777-3^Platelet Count^LN||180|K/uL|150-400|N|||||F|||20260204113934
+OBX|11|NM|30522-7^C-Reactive Protein^LN||62.3|mg/L|<10|H|||||F|||20260204113934
+OBX|12|NM|33959-8^Procalcitonin^LN||5.2|ng/mL|<0.5|H|||||F|||20260204113934

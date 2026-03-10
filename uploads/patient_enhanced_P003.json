@@ -1,0 +1,88 @@
+{
+  "resourceType": "Patient",
+  "id": "P003",
+  "name": [
+    {
+      "use": "official",
+      "text": "Robert Johnson",
+      "family": "Johnson",
+      "given": [
+        "Robert"
+      ]
+    }
+  ],
+  "birthDate": "1992-11-08",
+  "gender": "male",
+  "age": 31,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0103"
+    },
+    {
+      "system": "email",
+      "value": "robert.johnson@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "789 Pine Road, Boston, MA 02101",
+      "line": [
+        "789 Pine Road"
+      ],
+      "city": "Boston",
+      "state": "MA",
+      "postalCode": "02101"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "Michael Johnson"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "Fractured Rib",
+    "modality": "XRay",
+    "riskLevel": "Low",
+    "anomalies": [
+      "Fracture in 5th and 6th rib",
+      "No pneumothorax"
+    ],
+    "treatment": "Conservative management with pain control",
+    "medications": [
+      {
+        "name": "Ibuprofen",
+        "dosage": "400mg",
+        "frequency": "Every 6 hours",
+        "duration": "10 days"
+      },
+      {
+        "name": "Acetaminophen",
+        "dosage": "500mg",
+        "frequency": "As needed",
+        "duration": "2 weeks"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.932035"
+  }
+}

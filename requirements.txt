@@ -1,0 +1,10 @@
+Flask
+requests
+pydicom
+dicomweb-client
+hl7                # for HL7 message parsing
+numpy              # for DICOM image data
+Pillow             # for DICOM to image conversion
+scikit-learn       # for kidney classification model
+opencv-python      # for image feature extraction & segmentation
+matplotlib         # for visualization

@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block title %}DICOM Gallery - Medihosp Dashboard{% endblock %}
+{% block content %}
+  <main class="main-content">
+    <div class="section-header">
+      <h2><i class="fas fa-images"></i> DICOM Image Gallery</h2>
+      <p>View all uploaded DICOM medical images</p>
+    </div>
+
+    <div class="upload-section">
+      {% if dicom_files %}
+        <div id="dicomGallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px;">
+          <!-- Gallery cards will be loaded here by JavaScript -->
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <h2>No DICOM Files</h2>
+          <p>Upload DICOM files to get started</p>
+        </div>
+      {% endif %}
+
+      <!-- Image Modal -->
+      <div id="imageModal" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+          <div class="popup-header">
+            <i class="fas fa-image" style="color: #667eea;"></i>
+            <h3 id="imageFileName" style="margin: 0;">DICOM Image</h3>
+          </div>
+          <div class="popup-body" style="text-align: center; padding: 30px;">
+            <img id="modalImage" src="" alt="DICOM image" style="max-width: 100%; height: auto; background: #f7fafc; display: block; margin: 0 auto; border-radius: 8px; padding: 20px;" />
+          </div>
+          <div class="popup-footer">
+            <button id="downloadBtn" class="popup-btn" onclick="downloadModalImage()"><i class="fas fa-download"></i> Download</button>
+            <button class="popup-btn" onclick="closeImageModal()" style="background: #e2e8f0; color: #4a5568;"><i class="fas fa-times"></i> Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .empty-state {
+      text-align: center;
+      padding: 60px 40px;
+      color: #718096;
+    }
+    
+    .empty-state i {
+      font-size: 4rem;
+      color: #cbd5e0;
+      display: block;
+      margin-bottom: 20px;
+    }
+    
+    .empty-state h2 {
+      color: #2d3748;
+      margin: 20px 0 10px;
+    }
+    
+    .empty-state p {
+      margin: 0;
+    }
+  </style>
+
+  <script>
+    const dicomFiles = {{ dicom_files|tojson }};
+
+    function loadDicomGallery() {
+      const gallery = document.getElementById('dicomGallery');
+      
+      if (!dicomFiles || dicomFiles.length === 0) {
+        gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #718096;"><i class="fas fa-inbox"></i> No DICOM images uploaded yet</div>';
+        return;
+      }
+      
+      // dicomFiles is array of instance UUIDs from Orthanc
+      const cards = dicomFiles.map(instanceUuid => {
+        const imgUrl = `/api/orthanc-dicom-image/${instanceUuid}?format=png`;
+        
+        return `
+          <div style="background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);" 
+               onclick="viewDicomImage('${instanceUuid}')" 
+               onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 25px rgba(0, 0, 0, 0.15)';" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 3px rgba(0, 0, 0, 0.1)';">
+            <div style="width: 100%; height: 180px; background: #2d3748; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+              <img src="${imgUrl}" alt="DICOM" style="max-width: 100%; max-height: 100%; width: auto; height: auto;" 
+                   onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23444%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23888%22 font-size=%2214%22%3EDICOM%3C/text%3E%3C/svg%3E'" />
+            </div>
+            <div style="padding: 12px; background: white;">
+              <div style="font-size: 0.85rem; font-weight: 500; color: #2d3748; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px;">DICOM Image</div>
+              <div style="font-size: 0.7rem; color: #a0aec0; margin-top: 4px; font-family: monospace;">${instanceUuid.substring(0, 16)}...</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      gallery.innerHTML = cards;
+      
+      // Load metadata for all files
+      dicomFiles.forEach(instanceUuid => {
+        fetch(`/api/orthanc-dicom-info/${instanceUuid}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && data.data) {
+              const info = data.data;
+              const card = document.querySelector(`[onclick="viewDicomImage('${instanceUuid}')"]`);
+              if (card) {
+                const textDiv = card.querySelector('[style*="overflow: hidden; text-overflow"]');
+                if (textDiv) {
+                  textDiv.innerHTML = `<span style="font-size: 0.75rem; padding: 4px 8px; background: rgba(102, 126, 234, 0.1); border-radius: 4px; display: inline-block;">${info.modality}</span> ${info.patient_id}`;
+                }
+                const dateDiv = card.querySelector('div:last-child > div:last-child');
+                if (dateDiv) {
+                  dateDiv.innerHTML = `📅 ${info.study_date || 'N/A'}`;
+                }
+              }
+            }
+          })
+          .catch(e => console.error('Error fetching DICOM info:', e));
+      });
+    }
+
+    function viewDicomImage(instanceUuid) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const imageFileName = document.getElementById('imageFileName');
+      const downloadBtn = document.getElementById('downloadBtn');
+      
+      modalImage.dataset.instanceUuid = instanceUuid;
+      imageFileName.innerHTML = `<i class="fas fa-spinner" style="animation: spin 1s linear infinite;"></i> Loading...`;
+      modalImage.style.opacity = '0.5';
+      modalImage.src = '';
+      
+      const img = new Image();
+      img.onload = function() {
+        modalImage.src = img.src;
+        modalImage.style.opacity = '1';
+        
+        // Fetch metadata and update header
+        fetch(`/api/orthanc-dicom-info/${instanceUuid}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && data.data) {
+              const info = data.data;
+              imageFileName.innerHTML = `
+                <div>
+                  <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 8px;">DICOM from Orthanc</div>
+                  <div style="font-size: 0.8rem; color: #718096; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; row-gap: 6px;">
+                    <span><strong>Modality:</strong> ${info.modality}</span>
+                    <span><strong>Patient:</strong> ${info.patient_id}</span>
+                    <span><strong>Date:</strong> ${info.study_date}</span>
+                    ${info.number_of_frames > 1 ? `<span style="color: #f6ad55; grid-column: 1/-1;"><i class="fas fa-film"></i> ${info.number_of_frames} Frames</span>` : ''}
+                  </div>
+                </div>
+              `;
+            }
+          })
+          .catch(err => {
+            imageFileName.innerHTML = `<div style="font-size: 0.9rem; font-weight: 600;">DICOM Image</div>`;
+          });
+      };
+      
+      img.onerror = function() {
+        modalImage.style.opacity = '1';
+        imageFileName.innerHTML = `
+          <div style="color: #c53030;">
+            <i class="fas fa-exclamation-circle"></i> Failed to load image
+            <div style="font-size: 0.8rem; margin-top: 8px;">${instanceUuid}</div>
+          </div>
+        `;
+        modalImage.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23333%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2216%22%3EImage Failed to Load%3C/text%3E%3C/svg%3E';
+      };
+      
+      img.src = `/api/orthanc-dicom-image/${instanceUuid}?format=png`;
+      downloadBtn.onclick = () => downloadDicomImage(instanceUuid);
+      modal.style.display = 'flex';
+    }
+
+    function downloadDicomImage(instanceUuid) {
+      const link = document.createElement('a');
+      link.href = `/api/orthanc-dicom-image/${instanceUuid}?format=png`;
+      link.download = `dicom_${instanceUuid.substring(0, 8)}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadModalImage() {
+      const modalImage = document.getElementById('modalImage');
+      const instanceUuid = modalImage.dataset.instanceUuid;
+      if (instanceUuid) {
+        downloadDicomImage(instanceUuid);
+      }
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('imageModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Load gallery on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDicomGallery();
+    });
+  </script>
+{% endblock %}

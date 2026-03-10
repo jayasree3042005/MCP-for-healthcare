@@ -1,0 +1,89 @@
+{
+  "resourceType": "Patient",
+  "id": "P008",
+  "name": [
+    {
+      "use": "official",
+      "text": "Susan Anderson",
+      "family": "Anderson",
+      "given": [
+        "Susan"
+      ]
+    }
+  ],
+  "birthDate": "1978-06-14",
+  "gender": "female",
+  "age": 47,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0108"
+    },
+    {
+      "system": "email",
+      "value": "susan.anderson@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "258 Spruce Way, Philadelphia, PA 19101",
+      "line": [
+        "258 Spruce Way"
+      ],
+      "city": "Philadelphia",
+      "state": "PA",
+      "postalCode": "19101"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "James Anderson"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "Atelectasis",
+    "modality": "XRay",
+    "riskLevel": "Medium",
+    "anomalies": [
+      "Left lower lobe collapse",
+      "Post-operative",
+      "Mild hypoxemia"
+    ],
+    "treatment": "Respiratory therapy and incentive spirometry",
+    "medications": [
+      {
+        "name": "Theophylline",
+        "dosage": "300mg",
+        "frequency": "Twice daily",
+        "duration": "1 week"
+      },
+      {
+        "name": "Oxygen Therapy",
+        "dosage": "1-2L/min",
+        "frequency": "Continuous",
+        "duration": "Until O2 sat normal"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.953592"
+  }
+}

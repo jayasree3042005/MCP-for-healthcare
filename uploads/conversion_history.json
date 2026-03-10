@@ -1,0 +1,9 @@
+{
+  "ab34bf5a-648f-4a15-a451-e153b9dc6075": {
+    "status": "success",
+    "patient_id": "P001",
+    "filename": "P001_complete.hl7",
+    "message": "Successfully converted and uploaded all FHIR resources with diagnostic summary for Patient P001",
+    "timestamp": "2026-03-10 21:01:29"
+  }
+}

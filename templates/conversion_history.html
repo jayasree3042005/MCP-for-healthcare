@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+{% block title %}Conversion History - Medihosp Dashboard{% endblock %}
+{% block content %}
+  <main class="main-content">
+    <div class="section-header">
+      <h2><i class="fas fa-history"></i> Conversion History</h2>
+      <p>View the history of all HL7 to FHIR conversions</p>
+    </div>
+
+    <div class="upload-section">
+      {% if conversions %}
+        <div style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0;">
+          <button class="nav-link" id="tab-history" style="border-bottom: 3px solid #667eea; border-radius: 0; background: transparent; color: #667eea; margin-bottom: -2px;" onclick="switchTab('history-tab')">
+            <i class="fas fa-table"></i> Conversion History
+          </button>
+          <button class="nav-link" id="tab-dicom" style="border-radius: 0; background: transparent; color: #718096;" onclick="switchTab('dicom-tab')">
+            <i class="fas fa-images"></i> DICOM Images
+          </button>
+        </div>
+
+        <div id="history-tab" class="tab-content active">
+          <div style="overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Conversion ID</th>
+                  <th>Patient ID</th>
+                  <th>Filename</th>
+                  <th>Status</th>
+                  <th>Message</th>
+                  <th>Timestamp</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for id, conversion in conversions.items() %}
+                  <tr>
+                    <td style="font-size: 0.85rem; color: #718096; word-break: break-all;">{{ id }}</td>
+                    <td>{{ conversion.get('patient_id', 'N/A') }}</td>
+                    <td>{{ conversion.get('filename', 'N/A') }}</td>
+                    <td>
+                      <span class="status-badge {% if conversion.get('status') == 'success' %}success{% elif conversion.get('status') == 'error' %}error{% else %}warning{% endif %}" style="display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fas fa-{% if conversion.get('status') == 'success' %}check-circle{% elif conversion.get('status') == 'error' %}exclamation-circle{% else %}clock{% endif %}"></i>
+                        {{ conversion.get('status', 'processing')|capitalize }}
+                      </span>
+                    </td>
+                    <td style="font-size: 0.9rem; color: #4a5568;">{{ conversion.get('message', 'Processing...') }}</td>
+                    <td style="font-size: 0.85rem; color: #718096;">{{ conversion.get('timestamp', 'N/A') }}</td>
+                    <td><button class="decode-btn" onclick="loadImagesForConversion('{{ id }}', '{{ conversion.get('patient_id', 'N/A') }}')"><i class="fas fa-images"></i> View</button></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="dicom-tab" class="tab-content" style="display: none;">
+          <div style="padding: 25px;">
+            <h3 id="dicom-patient-info" style="margin-bottom: 20px; color: #2d3748;">Select a conversion to view DICOM images</h3>
+            <div id="dicomGallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+              <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #718096;">
+                <i class="fas fa-inbox" style="font-size: 2rem; display: block; margin-bottom: 15px;"></i>
+                <p>Select a conversion to view DICOM images</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <h2>No Conversions Yet</h2>
+          <p>No HL7 to FHIR conversions have been performed.Upload patient data files to get started.</p>
+          <a href="{{ url_for('index') }}" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Upload</a>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 2000; align-items: center; justify-content: center;">
+    <div style="position: relative; max-width: 90%; max-height: 90%; background: white; border-radius: 12px; overflow: hidden;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #e2e8f0; background: #f7fafc;">
+        <div id="imageFileName" style="flex: 1; font-weight: 600; color: #2d3748;"></div>
+        <div style="display: flex; gap: 10px;">
+          <button id="downloadBtn" style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+            <i class="fas fa-download"></i> Download
+          </button>
+          <button onclick="closeImageModal()" style="padding: 8px 12px; background: #e2e8f0; color: #2d3748; border: none; border-radius: 6px; cursor: pointer; font-size: 1.2rem;">
+            ×
+          </button>
+        </div>
+      </div>
+      <div style="padding: 20px; background: #000; max-height: calc(90vh - 100px); overflow: auto; display: flex; align-items: center; justify-content: center;">
+        <img id="modalImage" src="" alt="DICOM Image" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #imageModal {
+      animation: fadeIn 0.2s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    .history-table thead {
+      background: #f7fafc;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .history-table th {
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.9rem;
+    }
+    .history-table td {
+      padding: 15px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #4a5568;
+    }
+    .history-table tbody tr:hover {
+      background-color: #f7fafc;
+    }
+    .tab-content {
+      animation: fadeIn 0.3s ease-out;
+    }
+    .status-badge.success {
+      background: rgba(72, 187, 120, 0.1);
+      color: #2f855a;
+    }
+    .status-badge.error {
+      background: rgba(245, 101, 101, 0.1);
+      color: #c53030;
+    }
+    .status-badge.warning {
+      background: rgba(237, 137, 54, 0.1);
+      color: #c05621;
+    }
+  </style>
+
+  <script>
+    function switchTab(tabName) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.style.display = 'none');
+      
+      document.getElementById('tab-history').style.borderBottomColor = '#cbd5e0';
+      document.getElementById('tab-history').style.color = '#718096';
+      document.getElementById('tab-dicom').style.borderBottomColor = 'transparent';
+      document.getElementById('tab-dicom').style.color = '#718096';
+      
+      document.getElementById(tabName).style.display = 'block';
+      
+      const btnMap = {'history-tab': 'tab-history', 'dicom-tab': 'tab-dicom'};
+      if (btnMap[tabName]) {
+        document.getElementById(btnMap[tabName]).style.borderBottomColor = '#667eea';
+        document.getElementById(btnMap[tabName]).style.color = '#667eea';
+      }
+    }
+
+    function loadImagesForConversion(conversionId, patientId) {
+      const gallery = document.getElementById('dicomGallery');
+      const patientInfo = document.getElementById('dicom-patient-info');
+      
+      if (!conversionId || conversionId === 'N/A') {
+        gallery.innerHTML = '<div style="text-align: center; color: #c53030;"><i class="fas fa-exclamation"></i> Invalid conversion ID</div>';
+        return;
+      }
+      
+      gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center;"><i class="fas fa-spinner" style="animation: spin 1s linear infinite; font-size: 2rem;"></i></div>';
+      patientInfo.textContent = `Loading images for Patient ${patientId}...`;
+      switchTab('dicom-tab');
+      
+      fetch(`/api/conversion-files/${conversionId}`)
+        .then(response => response.json())
+        .then(data => {
+          patientInfo.textContent = `DICOM Images for Patient ${patientId}`;
+          
+          if (data.error) {
+            gallery.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #c53030;"><i class="fas fa-exclamation-circle"></i> Error: ${data.error}</div>`;
+            return;
+          }
+          
+          const dicomFiles = data.dicom_files || [];
+          
+          if (dicomFiles.length > 0) {
+            // Load all DICOM metadata in parallel
+            const metadataPromises = dicomFiles.map(filename =>
+              fetch(`/api/dicom-info/${filename}`)
+                .then(r => r.json())
+                .then(info => ({ filename, info }))
+                .catch(e => ({ filename, info: null, error: e }))
+            );
+            
+            Promise.all(metadataPromises).then(results => {
+              const cards = results.map(({ filename, info }) => {
+                const imgUrl = `/api/dicom-to-image/${filename}`;
+                const modality = info?.data?.modality || 'DICOM';
+                const description = info?.data?.series_description?.substring(0, 20) || filename.substring(0, 20);
+                const frames = info?.data?.number_of_frames || 1;
+                const studyDate = info?.data?.study_date || 'N/A';
+                
+                return `
+                  <div style="background: #f7fafc; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease;" onclick="viewDicomImage('${filename}')" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 25px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='';">
+                    <div style="width: 100%; height: 180px; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                      <img src="${imgUrl}" alt="${filename}" style="max-width: 100%; max-height: 100%; width: auto; height: auto;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23333%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2214%22%3EDICOM%3C/text%3E%3C/svg%3E'" />
+                    </div>
+                    <div style="padding: 12px; background: white;">
+                      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                        <span class="status-badge success" style="font-size: 0.75rem;">${modality}</span>
+                        ${frames > 1 ? `<span class="status-badge warning" style="font-size: 0.75rem;">${frames} Frames</span>` : ''}
+                      </div>
+                      <div style="font-size: 0.85rem; font-weight: 500; color: #2d3748; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${description}</div>
+                      <div style="font-size: 0.75rem; color: #718096; margin-top: 4px;">📅 ${studyDate}</div>
+                    </div>
+                  </div>
+                `;
+              }).join('');
+              gallery.innerHTML = cards;
+            });
+          } else {
+            gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #718096;"><i class="fas fa-inbox" style="font-size: 2rem; display: block; margin-bottom: 15px;"></i> No DICOM images found</div>';
+          }
+        })
+        .catch(error => {
+          gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #c53030;"><i class="fas fa-exclamation-circle"></i> Error loading images</div>';
+        });
+    }
+
+    function viewDicomImage(filename) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const imageFileName = document.getElementById('imageFileName');
+      const downloadBtn = document.getElementById('downloadBtn');
+      
+      // Store the filename for download
+      modalImage.dataset.filename = filename;
+      
+      // Show loading state
+      imageFileName.innerHTML = `<i class="fas fa-spinner" style="animation: spin 1s linear infinite;"></i> Loading image...`;
+      modalImage.style.opacity = '0.5';
+      modalImage.src = '';
+      
+      // Load image with error handling
+      const img = new Image();
+      img.onload = function() {
+        modalImage.src = img.src;
+        modalImage.style.opacity = '1';
+        
+        // Fetch metadata and update header
+        fetch(`/api/dicom-info/${filename}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && data.data) {
+              const info = data.data;
+              imageFileName.innerHTML = `
+                <div>
+                  <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; word-break: break-all;">${filename}</div>
+                  <div style="font-size: 0.8rem; color: #718096; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; row-gap: 6px;">
+                    <span><strong>Modality:</strong> ${info.modality}</span>
+                    <span><strong>Patient:</strong> ${info.patient_id}</span>
+                    <span><strong>Date:</strong> ${info.study_date}</span>
+                    ${info.number_of_frames > 1 ? `<span style="color: #f6ad55; grid-column: 1/-1;"><i class="fas fa-film"></i> ${info.number_of_frames} Frames</span>` : ''}
+                  </div>
+                </div>
+              `;
+            } else {
+              imageFileName.innerHTML = `<div style="font-size: 0.9rem; font-weight: 600;">${filename}</div>`;
+            }
+          })
+          .catch(err => {
+            imageFileName.innerHTML = `<div style="font-size: 0.9rem; font-weight: 600;">${filename}</div>`;
+          });
+      };
+      
+      img.onerror = function() {
+        modalImage.style.opacity = '1';
+        imageFileName.innerHTML = `
+          <div style="color: #c53030;">
+            <i class="fas fa-exclamation-circle"></i> Failed to load image
+            <div style="font-size: 0.8rem; margin-top: 8px;">${filename}</div>
+          </div>
+        `;
+        modalImage.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23333%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2216%22%3EImage Failed to Load%3C/text%3E%3C/svg%3E';
+      };
+      
+      img.src = `/api/dicom-to-image/${filename}`;
+      downloadBtn.onclick = () => downloadDicomImage(filename);
+      modal.style.display = 'flex';
+    }
+
+    function downloadDicomImage(filename) {
+      const link = document.createElement('a');
+      link.href = `/api/dicom-to-image/${filename}`;
+      link.download = `${filename}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadModalImage() {
+      const modalImage = document.getElementById('modalImage');
+      const filename = modalImage.dataset.filename;
+      if (filename) {
+        downloadDicomImage(filename);
+      }
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('imageModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>{% endblock %}
