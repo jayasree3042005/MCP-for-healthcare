@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113933||ADT^A01|MSG003|P|2.5
+EVN|A01|20260204113933
+PID|1||P003^^^HOSPITAL||Williams^Robert||19620715|M|||789 Pine Road^Boston^MA^02101^^^^C||+1-555-0103^PH^^^1~robert.williams@email.com^E
+NK1|1|Jennifer Williams|SIS||+1-555-0002
+OBX|1|NM|8867-4^Heart rate^LN||76|beats/minute|||||F|||20260204112428
+OBX|2|NM|8480-6^Systolic blood pressure^LN||135|mmHg|||||F|||20260204112428
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||85|mmHg|||||F|||20260204112428
+OBX|4|NM|59408-5^Oxygen saturation^LN||96|%|||||F|||20260204112428
+OBX|5|NM|8310-5^Body temperature^LN||37.8|Cel|||||F|||20260204112428
+OBX|6|NM|29463-7^Body weight^LN||85|kg|||||F|||20260204112428
+OBX|7|NM|8302-2^Body height^LN||180|cm|||||F|||20260204112428
+DG1|1|ICD10|J12.9^^ICD-10-CM|Viral pneumonia unspecified|||||||||||||M
+DG1|2|ICD10|B34.9^^ICD-10-CM|Viral infection unspecified|||||||||||||M
+PR1|1|1234569|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Ground glass opacities in bilateral upper lobes. Interstitial pattern. No consolidation.
+NTE|2||IMPRESSION: Viral pneumonia with characteristic ground glass pattern. Supportive care recommended.
+NTE|3||MEDICATIONS: Oseltamivir (Tamiflu) 75mg PO BID for 5 days; Acetaminophen 500mg PO Q6H PRN; Loratadine 10mg PO once daily; Multivitamin daily
+NTE|4||SEVERITY: MEDIUM - Fever present, ground glass opacities, oxygen saturation normal, mild respiratory symptoms
+NTE|5||DISCHARGE SUMMARY: Male patient with viral pneumonia confirmed by imaging. Started on antiviral therapy. Vital signs relatively stable. Discharged with home care instructions and follow-up scheduled.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||11.5|K/uL|4.5-11.0|N|||||F|||20260204113933
+OBX|9|NM|718-7^Hemoglobin^LN||14.8|g/dL|13.5-17.5|N|||||F|||20260204113933
+OBX|10|NM|777-3^Platelet Count^LN||320|K/uL|150-400|N|||||F|||20260204113933
+OBX|11|NM|30522-7^C-Reactive Protein^LN||22.5|mg/L|<10|H|||||F|||20260204113933
+OBX|12|NM|33959-8^Procalcitonin^LN||0.8|ng/mL|<0.5|H|||||F|||20260204113933

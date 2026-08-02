@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113931||ADT^A01|MSG001|P|2.5
+EVN|A01|20260204113931
+PID|1||P001^^^HOSPITAL||Smith^John||19680315|M|||123 Main Street^Springfield^IL^62701^^^^C||+1-555-0101^PH^^^1~john.smith@email.com^E
+NK1|1|Robert Smith|FTH||+1-555-0000
+OBX|1|NM|8867-4^Heart rate^LN||88|beats/minute|||||F|||20260204112426
+OBX|2|NM|8480-6^Systolic blood pressure^LN||120|mmHg|||||F|||20260204112426
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||78|mmHg|||||F|||20260204112426
+OBX|4|NM|59408-5^Oxygen saturation^LN||94|%|||||F|||20260204112426
+OBX|5|NM|8310-5^Body temperature^LN||38.8|Cel|||||F|||20260204112426
+OBX|6|NM|29463-7^Body weight^LN||78|kg|||||F|||20260204112426
+OBX|7|NM|8302-2^Body height^LN||178|cm|||||F|||20260204112426
+DG1|1|ICD10|J18.9^^ICD-10-CM|Pneumonia|||||||||||||H
+DG1|2|ICD10|R50.9^^ICD-10-CM|Fever, unspecified|||||||||||||M
+PR1|1|1234567|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Bilateral lower lobe consolidation consistent with pneumonia. No pleural effusion. Mild pulmonary edema noted.
+NTE|2||IMPRESSION: Acute community-acquired pneumonia with bilateral involvement. Recommend hospitalization and antibiotic therapy.
+NTE|3||MEDICATIONS: Amoxicillin-Clavulanic Acid 500mg PO TID for 7 days; Paracetamol 500mg PO Q6H PRN for fever; Cough Suppressant 10mg PO BID for 5 days; Oxygen therapy as needed to maintain SpO2 >94%
+NTE|4||SEVERITY: HIGH - Bilateral involvement, fever >38.5°C, elevated WBC, low oxygen saturation
+NTE|5||DISCHARGE SUMMARY: Patient admitted with respiratory distress. Imaging shows bilateral pneumonia. Started on IV antibiotics. Close monitoring required. Discharge planned for day 7 if improvement.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||15.2|K/uL|4.5-11.0|H|||||F|||20260204113931
+OBX|9|NM|718-7^Hemoglobin^LN||12.5|g/dL|13.5-17.5|L|||||F|||20260204113931
+OBX|10|NM|777-3^Platelet Count^LN||250|K/uL|150-400|N|||||F|||20260204113931
+OBX|11|NM|30522-7^C-Reactive Protein^LN||45.2|mg/L|<10|H|||||F|||20260204113931
+OBX|12|NM|33959-8^Procalcitonin^LN||2.5|ng/mL|<0.5|H|||||F|||20260204113931

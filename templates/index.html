@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medihosp Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <h1>Medihosp Dashboard</h1>
+        </div>
+        <div class="nav-links">
+          <a href="{{ url_for('view_fhir_resources') }}" class="nav-link">
+            <i class="fas fa-fire"></i> View FHIR Resources
+          </a>
+          <a href="{{ url_for('conversion_history') }}" class="nav-link">
+            <i class="fas fa-history"></i> Conversion History
+          </a>
+          <a href="{{ url_for('ai_chat_page') }}" class="nav-link">
+            <i class="fas fa-robot"></i> AI Chat
+          </a>
+          <a href="{{ url_for('kidney_analysis_page') }}" class="nav-link">
+            <i class="fas fa-microscope"></i> Kidney Analysis
+          </a>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text">System Online</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Messages -->
+    <div class="messages-container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'success' if category == 'success' else 'error' if category == 'error' else 'warning' if category == 'warning' else 'info' }}">
+        <i
+          class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' if category == 'error' else 'exclamation-triangle' if category == 'warning' else 'info-circle' }}"></i>
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Upload Section -->
+      <div class="upload-section">
+        <div class="section-header">
+          <h2><i class="fas fa-cloud-upload-alt"></i> Medical Data Upload</h2>
+          <p>Upload DICOM images and patient data files for processing</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+          <div class="upload-grid">
+            <!-- DICOM Upload -->
+            <div class="upload-card">
+              <div class="card-header">
+                <i class="fas fa-x-ray"></i>
+                <h3>DICOM Images</h3>
+              </div>
+              <div class="file-input-wrapper">
+                <input type="file" name="dicoms" id="dicoms" class="file-input" multiple accept=".dcm,.DCM">
+                <label for="dicoms" class="file-label">
+                  <i class="fas fa-upload"></i>
+                  <span>Choose DICOM files</span>
+                  <small>Select .dcm files</small>
+                </label>
+              </div>
+              <div class="file-info">
+                <span class="file-count" id="dicom-count">No files selected</span>
+              </div>
+            </div>
+
+            <!-- Patient Data Upload -->
+            <div class="upload-card">
+              <div class="card-header">
+                <i class="fas fa-file-medical-alt"></i>
+                <h3>Patient Data</h3>
+              </div>
+              <div class="file-input-wrapper">
+                <input type="file" name="hl7data" id="hl7data" class="file-input" multiple accept=".json,.hl7,.txt">
+                <label for="hl7data" class="file-label">
+                  <i class="fas fa-upload"></i>
+                  <span>Choose patient data files</span>
+                  <small>Select .json, .hl7, or .txt files</small>
+                </label>
+              </div>
+              <div class="file-info">
+                <span class="file-count" id="hl7-count">No files selected</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="process-section">
+            <button type="submit" class="process-btn" id="processBtn">
+              <i class="fas fa-cogs"></i>
+              Process Files
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Conversion Status Box -->
+      <div id="conversionBox" class="conversion-box" style="display: none;">
+        <div class="conversion-header">
+          <i class="fas fa-exchange-alt"></i>
+          <h3>HL7 to FHIR Conversion</h3>
+        </div>
+        <div class="conversion-content">
+          <div class="conversion-spinner">
+            <div class="spinner"></div>
+          </div>
+          <div class="conversion-status">
+            <p id="conversionMessage">Converting HL7 data to FHIR format...</p>
+            <div class="conversion-progress">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Popup -->
+      <div id="successPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-content success-popup">
+          <div class="popup-header">
+            <i class="fas fa-check-circle"></i>
+            <h3>Conversion Successful!</h3>
+          </div>
+          <div class="popup-body">
+            <p id="successMessage">HL7 data has been successfully converted to FHIR format and uploaded to the server.
+            </p>
+            <div class="conversion-results" id="conversionResults"></div>
+          </div>
+          <div class="popup-footer">
+            <button class="popup-btn" onclick="closeSuccessPopup()">
+              <i class="fas fa-check"></i>
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="info-content">
+            <h4>Orthanc PACS</h4>
+            <p>DICOM image storage and retrieval</p>
+            <span class="info-status">Connected</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+            <h4>FHIR Server</h4>
+            <p>Healthcare data interoperability</p>
+            <span class="info-status">Online</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="info-content">
+            <h4>AI Processing</h4>
+            <p>Automated medical analysis</p>
+            <span class="info-status">Ready</span>
+          </div>
+          <a href="{{ url_for('ai_chat_page') }}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+        </div>
+
+        <div class="info-card" style="border: 1px solid rgba(168,85,247,0.3);">
+          <div class="info-icon" style="color: #a855f7;">
+            <i class="fas fa-microscope"></i>
+          </div>
+          <div class="info-content">
+            <h4>Kidney Cancer AI</h4>
+            <p>Classification & segmentation analysis</p>
+            <span class="info-status" style="color: #a855f7;">New</span>
+          </div>
+          <a href="{{ url_for('kidney_analysis_page') }}"
+            style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // File count updates
+    document.getElementById('dicoms').addEventListener('change', function (e) {
+      const count = e.target.files.length;
+      document.getElementById('dicom-count').textContent = count > 0 ? `${count} file(s) selected` : 'No files selected';
+    });
+
+    document.getElementById('hl7data').addEventListener('change', function (e) {
+      const count = e.target.files.length;
+      document.getElementById('hl7-count').textContent = count > 0 ? `${count} file(s) selected` : 'No files selected';
+    });
+
+    // Conversion tracking
+    let conversionResults = {{ conversion_results | default ('[]') | safe }};
+
+    if (conversionResults && conversionResults.length > 0) {
+      showConversionBox();
+      trackConversions(conversionResults);
+    }
+
+    function showConversionBox() {
+      document.getElementById('conversionBox').style.display = 'block';
+      document.getElementById('conversionBox').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideConversionBox() {
+      document.getElementById('conversionBox').style.display = 'none';
+    }
+
+    function trackConversions(conversions) {
+      let completedCount = 0;
+      const totalCount = conversions.length;
+
+      conversions.forEach((conversion, index) => {
+        setTimeout(() => {
+          checkConversionStatus(conversion.conversion_id, conversion.patient_id, conversion.filename, () => {
+            completedCount++;
+            updateProgress(completedCount, totalCount);
+
+            if (completedCount === totalCount) {
+              setTimeout(() => {
+                hideConversionBox();
+                showSuccessPopup(conversions);
+              }, 1000);
+            }
+          });
+        }, index * 500); // Stagger the status checks
+      });
+    }
+
+    function checkConversionStatus(conversionId, patientId, filename, onComplete) {
+      const checkStatus = () => {
+        fetch(`/conversion-status/${conversionId}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('conversionMessage').textContent =
+              data.message || `Processing ${filename} for Patient ${patientId}...`;
+
+            if (data.status === 'success' || data.status === 'error' || data.status === 'partial') {
+              onComplete();
+            } else {
+              setTimeout(checkStatus, 1000); // Check again in 1 second
+            }
+          })
+          .catch(error => {
+            console.error('Error checking conversion status:', error);
+            onComplete();
+          });
+      };
+
+      checkStatus();
+    }
+
+    function updateProgress(completed, total) {
+      const percentage = (completed / total) * 100;
+      document.getElementById('progressBar').style.width = percentage + '%';
+    }
+
+    function showSuccessPopup(conversions) {
+      const resultsContainer = document.getElementById('conversionResults');
+      resultsContainer.innerHTML = conversions.map(c =>
+        `<div class="result-item">
+            <i class="fas fa-check"></i>
+            <span>Patient ${c.patient_id} - ${c.filename}</span>
+          </div>`
+      ).join('');
+
+      document.getElementById('successPopup').style.display = 'flex';
+    }
+
+    function closeSuccessPopup() {
+      document.getElementById('successPopup').style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

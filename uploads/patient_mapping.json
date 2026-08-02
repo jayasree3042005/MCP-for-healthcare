@@ -1,0 +1,438 @@
+{
+  "patientMapping": {
+    "P001": {
+      "name": "John Smith",
+      "age": 56,
+      "gender": "Male",
+      "dateOfBirth": "1968-03-15",
+      "phone": "+1-555-0101",
+      "email": "john.smith@email.com",
+      "address": "123 Main Street, Springfield, IL 62701",
+      "hl7File": "P001_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P001/",
+      "primaryDiagnosis": "Pneumonia - Bilateral",
+      "severity": "HIGH",
+      "vitalSigns": {
+        "heartRate": "88 bpm",
+        "systolicBP": "120 mmHg",
+        "diastolicBP": "78 mmHg",
+        "oxygenSaturation": "94%",
+        "temperature": "38.8°C",
+        "weight": "78 kg",
+        "height": "178 cm"
+      },
+      "labResults": {
+        "wbc": "15.2 K/uL (HIGH)",
+        "hemoglobin": "12.5 g/dL (LOW)",
+        "platelets": "250 K/uL (NORMAL)",
+        "crp": "45.2 mg/L (HIGH)",
+        "procalcitonin": "2.5 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Amoxicillin-Clavulanic Acid", "dose": "500mg", "frequency": "TID", "duration": "7 days"},
+        {"name": "Paracetamol", "dose": "500mg", "frequency": "Q6H PRN", "duration": "As needed"},
+        {"name": "Cough Suppressant", "dose": "10mg", "frequency": "BID", "duration": "5 days"},
+        {"name": "Oxygen", "dose": "Variable", "frequency": "PRN", "duration": "To maintain SpO2 >94%"}
+      ],
+      "imaging": "Bilateral lower lobe consolidation",
+      "discharge": "Hospitalization required, close monitoring, discharge planned for day 7"
+    },
+    "P002": {
+      "name": "Mary Johnson",
+      "age": 48,
+      "gender": "Female",
+      "dateOfBirth": "1975-02-08",
+      "phone": "+1-555-0102",
+      "email": "mary.johnson@email.com",
+      "address": "456 Oak Avenue, Chicago, IL 60601",
+      "hl7File": "P002_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P002/",
+      "primaryDiagnosis": "Acute Bronchitis",
+      "secondaryDiagnosis": "Tachypnea",
+      "severity": "HIGH",
+      "vitalSigns": {
+        "heartRate": "92 bpm",
+        "systolicBP": "128 mmHg",
+        "diastolicBP": "82 mmHg",
+        "oxygenSaturation": "92%",
+        "temperature": "39.2°C",
+        "weight": "65 kg",
+        "height": "165 cm"
+      },
+      "labResults": {
+        "wbc": "14.8 K/uL (HIGH)",
+        "hemoglobin": "13.2 g/dL (NORMAL)",
+        "platelets": "280 K/uL (NORMAL)",
+        "crp": "38.5 mg/L (HIGH)",
+        "procalcitonin": "1.8 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Azithromycin", "dose": "500mg", "frequency": "Once daily", "duration": "5 days"},
+        {"name": "Albuterol", "dose": "2 puffs", "frequency": "Q4-6H PRN", "duration": "As needed"},
+        {"name": "Ibuprofen", "dose": "400mg", "frequency": "TID", "duration": "As needed"},
+        {"name": "Dextromethorphan", "dose": "10mg", "frequency": "TID", "duration": "For cough"}
+      ],
+      "imaging": "Right lower lobe infiltrate with hyperinflation",
+      "discharge": "Rest advised, follow-up in 3 days"
+    },
+    "P003": {
+      "name": "Robert Williams",
+      "age": 61,
+      "gender": "Male",
+      "dateOfBirth": "1962-07-15",
+      "phone": "+1-555-0103",
+      "email": "robert.williams@email.com",
+      "address": "789 Pine Road, Boston, MA 02101",
+      "hl7File": "P003_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P003/",
+      "primaryDiagnosis": "Viral Pneumonia",
+      "severity": "MEDIUM",
+      "vitalSigns": {
+        "heartRate": "76 bpm",
+        "systolicBP": "135 mmHg",
+        "diastolicBP": "85 mmHg",
+        "oxygenSaturation": "96%",
+        "temperature": "37.8°C",
+        "weight": "85 kg",
+        "height": "180 cm"
+      },
+      "labResults": {
+        "wbc": "11.5 K/uL (NORMAL)",
+        "hemoglobin": "14.8 g/dL (NORMAL)",
+        "platelets": "320 K/uL (NORMAL)",
+        "crp": "22.5 mg/L (HIGH)",
+        "procalcitonin": "0.8 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Oseltamivir", "dose": "75mg", "frequency": "BID", "duration": "5 days"},
+        {"name": "Acetaminophen", "dose": "500mg", "frequency": "Q6H PRN", "duration": "As needed"},
+        {"name": "Loratadine", "dose": "10mg", "frequency": "Once daily", "duration": "As needed"},
+        {"name": "Multivitamin", "dose": "1 tablet", "frequency": "Daily", "duration": "Ongoing"}
+      ],
+      "imaging": "Ground glass opacities in bilateral upper lobes",
+      "discharge": "Home care with antiviral therapy, follow-up scheduled"
+    },
+    "P004": {
+      "name": "Patricia Brown",
+      "age": 45,
+      "gender": "Female",
+      "dateOfBirth": "1980-04-22",
+      "phone": "+1-555-0104",
+      "email": "patricia.brown@email.com",
+      "address": "321 Elm Street, Houston, TX 77001",
+      "hl7File": "P004_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P004/",
+      "primaryDiagnosis": "Severe Pneumonia",
+      "secondaryDiagnosis": "Acute Respiratory Failure",
+      "severity": "CRITICAL",
+      "vitalSigns": {
+        "heartRate": "98 bpm",
+        "systolicBP": "132 mmHg",
+        "diastolicBP": "80 mmHg",
+        "oxygenSaturation": "91%",
+        "temperature": "39.5°C",
+        "weight": "70 kg",
+        "height": "170 cm"
+      },
+      "labResults": {
+        "wbc": "18.5 K/uL (HIGH)",
+        "hemoglobin": "11.8 g/dL (LOW)",
+        "platelets": "180 K/uL (NORMAL)",
+        "crp": "62.3 mg/L (HIGH)",
+        "procalcitonin": "5.2 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Ceftriaxone", "dose": "2g", "frequency": "IV Q12H", "duration": "Ongoing"},
+        {"name": "Azithromycin", "dose": "500mg", "frequency": "IV once daily", "duration": "Ongoing"},
+        {"name": "Methylprednisolone", "dose": "125mg", "frequency": "IV Q6H", "duration": "Ongoing"},
+        {"name": "Heparin", "dose": "5000 units", "frequency": "SQ Q8H", "duration": "Ongoing"},
+        {"name": "Oxygen", "dose": "High-flow", "frequency": "Continuous", "duration": "Until SpO2 stable"}
+      ],
+      "imaging": "Extensive bilateral consolidation (>50% lung volume), septal thickening, pleural effusion",
+      "discharge": "ICU admission required, family counseling provided, prognosis guarded"
+    },
+    "P005": {
+      "name": "James Davis",
+      "age": 68,
+      "gender": "Male",
+      "dateOfBirth": "1955-09-30",
+      "phone": "+1-555-0105",
+      "email": "james.davis@email.com",
+      "address": "654 Oak Lane, Phoenix, AZ 85001",
+      "hl7File": "P005_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P005/",
+      "primaryDiagnosis": "Lobar Pneumonia",
+      "secondaryDiagnosis": "Essential Hypertension",
+      "severity": "MEDIUM-HIGH",
+      "vitalSigns": {
+        "heartRate": "82 bpm",
+        "systolicBP": "140 mmHg",
+        "diastolicBP": "88 mmHg",
+        "oxygenSaturation": "95%",
+        "temperature": "38.3°C",
+        "weight": "80 kg",
+        "height": "175 cm"
+      },
+      "labResults": {
+        "wbc": "13.2 K/uL (HIGH)",
+        "hemoglobin": "14.2 g/dL (NORMAL)",
+        "platelets": "310 K/uL (NORMAL)",
+        "crp": "35.8 mg/L (HIGH)",
+        "procalcitonin": "1.3 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Levofloxacin", "dose": "750mg", "frequency": "IV once daily", "duration": "5 days"},
+        {"name": "Lisinopril", "dose": "10mg", "frequency": "PO once daily", "duration": "Ongoing"},
+        {"name": "Amlodipine", "dose": "5mg", "frequency": "PO once daily", "duration": "Ongoing"},
+        {"name": "Aspirin", "dose": "81mg", "frequency": "PO once daily", "duration": "Ongoing"}
+      ],
+      "imaging": "Left upper lobe consolidation, mild cardiomegaly",
+      "discharge": "IV antibiotics required, close cardiac monitoring, manage hypertension carefully"
+    },
+    "P006": {
+      "name": "Susan Miller",
+      "age": 53,
+      "gender": "Female",
+      "dateOfBirth": "1972-06-18",
+      "phone": "+1-555-0106",
+      "email": "susan.miller@email.com",
+      "address": "987 Maple Drive, Philadelphia, PA 19101",
+      "hl7File": "P006_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P006/",
+      "primaryDiagnosis": "Influenza with Secondary Pneumonia",
+      "severity": "LOW",
+      "vitalSigns": {
+        "heartRate": "85 bpm",
+        "systolicBP": "125 mmHg",
+        "diastolicBP": "79 mmHg",
+        "oxygenSaturation": "97%",
+        "temperature": "37.5°C",
+        "weight": "72 kg",
+        "height": "160 cm"
+      },
+      "labResults": {
+        "wbc": "10.2 K/uL (NORMAL)",
+        "hemoglobin": "13.8 g/dL (NORMAL)",
+        "platelets": "350 K/uL (NORMAL)",
+        "crp": "15.2 mg/L (HIGH)",
+        "procalcitonin": "0.4 ng/mL (NORMAL)"
+      },
+      "medications": [
+        {"name": "Oseltamivir", "dose": "75mg", "frequency": "PO BID", "duration": "5 days"},
+        {"name": "Paracetamol", "dose": "500mg", "frequency": "PO Q6H PRN", "duration": "As needed"},
+        {"name": "Guaifenesin", "dose": "200mg", "frequency": "PO Q4H PRN", "duration": "For congestion"}
+      ],
+      "imaging": "Right middle lobe infiltrate, minimal findings",
+      "discharge": "Home care, excellent prognosis, follow-up with primary care"
+    },
+    "P007": {
+      "name": "Charles Wilson",
+      "age": 57,
+      "gender": "Male",
+      "dateOfBirth": "1966-08-12",
+      "phone": "+1-555-0107",
+      "email": "charles.wilson@email.com",
+      "address": "147 Cedar Court, San Antonio, TX 78201",
+      "hl7File": "P007_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P007/",
+      "primaryDiagnosis": "Bronchial Pneumonia",
+      "secondaryDiagnosis": "Type 2 Diabetes",
+      "severity": "HIGH",
+      "vitalSigns": {
+        "heartRate": "95 bpm",
+        "systolicBP": "138 mmHg",
+        "diastolicBP": "84 mmHg",
+        "oxygenSaturation": "93%",
+        "temperature": "39.1°C",
+        "weight": "82 kg",
+        "height": "182 cm"
+      },
+      "labResults": {
+        "wbc": "15.8 K/uL (HIGH)",
+        "hemoglobin": "13.5 g/dL (NORMAL)",
+        "platelets": "290 K/uL (NORMAL)",
+        "crp": "42.7 mg/L (HIGH)",
+        "procalcitonin": "2.1 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Cefixime", "dose": "400mg", "frequency": "PO BID", "duration": "10 days"},
+        {"name": "Salbutamol", "dose": "2 puffs", "frequency": "Q6H PRN", "duration": "As needed"},
+        {"name": "Metformin", "dose": "500mg", "frequency": "PO TID", "duration": "Ongoing"},
+        {"name": "Insulin Glargine", "dose": "20 units", "frequency": "SQ at bedtime", "duration": "Ongoing"},
+        {"name": "Chest PT", "dose": "N/A", "frequency": "BID", "duration": "During hospitalization"}
+      ],
+      "imaging": "Bilateral patchy infiltrates in lower lobes",
+      "discharge": "Minimum 7 days hospitalization, glucose control critical for recovery"
+    },
+    "P008": {
+      "name": "Elizabeth Moore",
+      "age": 45,
+      "gender": "Female",
+      "dateOfBirth": "1980-03-05",
+      "phone": "+1-555-0108",
+      "email": "elizabeth.moore@email.com",
+      "address": "258 Birch Boulevard, San Diego, CA 92101",
+      "hl7File": "P008_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P008/",
+      "primaryDiagnosis": "Influenza A with Pneumonia",
+      "severity": "LOW-MEDIUM",
+      "vitalSigns": {
+        "heartRate": "88 bpm",
+        "systolicBP": "118 mmHg",
+        "diastolicBP": "76 mmHg",
+        "oxygenSaturation": "96%",
+        "temperature": "37.9°C",
+        "weight": "68 kg",
+        "height": "168 cm"
+      },
+      "labResults": {
+        "wbc": "9.8 K/uL (NORMAL)",
+        "hemoglobin": "14.2 g/dL (NORMAL)",
+        "platelets": "340 K/uL (NORMAL)",
+        "crp": "18.5 mg/L (HIGH)",
+        "procalcitonin": "0.5 ng/mL (NORMAL)"
+      },
+      "medications": [
+        {"name": "Oseltamivir", "dose": "75mg", "frequency": "PO BID", "duration": "5 days"},
+        {"name": "Acetaminophen", "dose": "325mg", "frequency": "PO Q4-6H PRN", "duration": "As needed"},
+        {"name": "Robitussin", "dose": "10mL", "frequency": "PO Q4H PRN", "duration": "As needed"},
+        {"name": "Fluids", "dose": "N/A", "frequency": "Frequent", "duration": "Encouraged"}
+      ],
+      "imaging": "Scattered ground glass opacities in bilateral upper lobes",
+      "discharge": "Early discharge possible, supportive care at home, follow-up in 2 days"
+    },
+    "P009": {
+      "name": "George Taylor",
+      "age": 66,
+      "gender": "Male",
+      "dateOfBirth": "1959-01-28",
+      "phone": "+1-555-0109",
+      "email": "george.taylor@email.com",
+      "address": "369 Spruce Street, Dallas, TX 75201",
+      "hl7File": "P009_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P009/",
+      "primaryDiagnosis": "Severe Pneumonia",
+      "secondaryDiagnosis": "Congestive Heart Failure",
+      "severity": "CRITICAL",
+      "vitalSigns": {
+        "heartRate": "101 bpm",
+        "systolicBP": "145 mmHg",
+        "diastolicBP": "90 mmHg",
+        "oxygenSaturation": "90%",
+        "temperature": "39.8°C",
+        "weight": "88 kg",
+        "height": "185 cm"
+      },
+      "labResults": {
+        "wbc": "19.2 K/uL (HIGH)",
+        "hemoglobin": "12.1 g/dL (LOW)",
+        "platelets": "160 K/uL (NORMAL)",
+        "crp": "68.5 mg/L (HIGH)",
+        "procalcitonin": "6.8 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Piperacillin-Tazobactam", "dose": "4.5g", "frequency": "IV Q6H", "duration": "Ongoing"},
+        {"name": "Vancomycin", "dose": "15-20mg/kg", "frequency": "IV Q8-12H", "duration": "Ongoing"},
+        {"name": "Furosemide", "dose": "80mg", "frequency": "IV Q6H", "duration": "Ongoing"},
+        {"name": "Dobutamine", "dose": "5mcg/kg/min", "frequency": "IV infusion", "duration": "Ongoing"},
+        {"name": "Oxygen", "dose": "Variable", "frequency": "CPAP support", "duration": "Continuous"}
+      ],
+      "imaging": "Extensive bilateral consolidation, pulmonary edema, cardiomegaly (15% increase)",
+      "discharge": "ICU admission required, family care goals meetings recommended, prognosis very guarded"
+    },
+    "P010": {
+      "name": "Margaret Anderson",
+      "age": 51,
+      "gender": "Female",
+      "dateOfBirth": "1974-06-11",
+      "phone": "+1-555-0110",
+      "email": "margaret.anderson@email.com",
+      "address": "741 Walnut Way, Austin, TX 78701",
+      "hl7File": "P010_complete.hl7",
+      "dicomFolder": "dcm_by_patient/P010/",
+      "primaryDiagnosis": "Bacterial Pneumonia",
+      "severity": "LOW-MEDIUM",
+      "vitalSigns": {
+        "heartRate": "79 bpm",
+        "systolicBP": "122 mmHg",
+        "diastolicBP": "77 mmHg",
+        "oxygenSaturation": "97%",
+        "temperature": "38.1°C",
+        "weight": "75 kg",
+        "height": "172 cm"
+      },
+      "labResults": {
+        "wbc": "12.5 K/uL (HIGH)",
+        "hemoglobin": "13.9 g/dL (NORMAL)",
+        "platelets": "330 K/uL (NORMAL)",
+        "crp": "28.3 mg/L (HIGH)",
+        "procalcitonin": "1.0 ng/mL (HIGH)"
+      },
+      "medications": [
+        {"name": "Amoxicillin-Clavulanic Acid", "dose": "875mg", "frequency": "PO BID", "duration": "7 days"},
+        {"name": "Ibuprofen", "dose": "400mg", "frequency": "PO TID", "duration": "As needed"},
+        {"name": "Diphenhydramine", "dose": "25mg", "frequency": "PO at bedtime", "duration": "For rest"},
+        {"name": "Multivitamin", "dose": "1 tablet", "frequency": "Daily", "duration": "Ongoing"}
+      ],
+      "imaging": "Right middle lobe consolidation, no pleural effusion",
+      "discharge": "Oral antibiotics, clear follow-up plan, excellent prognosis with 2-3 week recovery"
+    }
+  },
+  "severityLevels": {
+    "CRITICAL": {
+      "patients": ["P004", "P009"],
+      "characteristics": [
+        "Extensive consolidation (>50% lung volume)",
+        "Critical hypoxia (SpO2 <91%)",
+        "Very high fever (>39.5°C)",
+        "Multiple organ dysfunction risk",
+        "ICU admission required",
+        "Guarded to very poor prognosis"
+      ]
+    },
+    "HIGH": {
+      "patients": ["P001", "P002", "P007"],
+      "characteristics": [
+        "Bilateral or multi-lobe involvement",
+        "High fever (>38.5°C)",
+        "Elevated WBC (>14K)",
+        "Low oxygen saturation (92-94%)",
+        "Hospital admission required",
+        "Good response expected to treatment"
+      ]
+    },
+    "MEDIUM": {
+      "patients": ["P003", "P005"],
+      "characteristics": [
+        "Moderate radiographic findings",
+        "Moderate fever (38-39°C)",
+        "Mildly elevated inflammatory markers",
+        "Good oxygen saturation (>95%)",
+        "Stable vital signs",
+        "Good prognosis"
+      ]
+    },
+    "LOW-MEDIUM": {
+      "patients": ["P008", "P010"],
+      "characteristics": [
+        "Limited radiographic findings",
+        "Mild fever (<38.5°C)",
+        "Mildly elevated labs",
+        "Excellent oxygen saturation (>96%)",
+        "Good vital signs",
+        "Excellent prognosis"
+      ]
+    },
+    "LOW": {
+      "patients": ["P006"],
+      "characteristics": [
+        "Minimal radiographic findings",
+        "Low fever (<38°C)",
+        "Normal or near-normal labs",
+        "Excellent oxygen saturation (>97%)",
+        "Normal vital signs",
+        "Excellent prognosis"
+      ]
+    }
+  }
+}

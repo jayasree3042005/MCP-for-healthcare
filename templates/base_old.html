@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Meditrack Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <h1>Medihosp Dashboard</h1>
+        </div>
+        <div class="nav-links">
+          <a href="{{ url_for('index') }}" class="nav-link"><i class="fas fa-home"></i> Home</a>
+          <a href="{{ url_for('view_fhir_resources') }}" class="nav-link"><i class="fas fa-fire"></i> FHIR Resources</a>
+          <a href="{{ url_for('conversion_history') }}" class="nav-link"><i class="fas fa-history"></i> Conversion History</a>
+          <a href="{{ url_for('ai_chat_page') }}" class="nav-link"><i class="fas fa-robot"></i> AI Chat</a>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text">System Online</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="messages-container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'success' if category == 'success' else 'error' if category == 'error' else 'warning' if category == 'warning' else 'info' }}">
+              <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' if category == 'error' else 'exclamation-triangle' if category == 'warning' else 'info-circle' }}"></i>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

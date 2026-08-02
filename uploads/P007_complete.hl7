@@ -1,0 +1,25 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113937||ADT^A01|MSG007|P|2.5
+EVN|A01|20260204113937
+PID|1||P007^^^HOSPITAL||Wilson^Charles||19660812|M|||147 Cedar Court^San Antonio^TX^78201^^^^C||+1-555-0107^PH^^^1~charles.wilson@email.com^E
+NK1|1|Nancy Wilson|WIF||+1-555-0006
+OBX|1|NM|8867-4^Heart rate^LN||95|beats/minute|||||F|||20260204112432
+OBX|2|NM|8480-6^Systolic blood pressure^LN||138|mmHg|||||F|||20260204112432
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||84|mmHg|||||F|||20260204112432
+OBX|4|NM|59408-5^Oxygen saturation^LN||93|%|||||F|||20260204112432
+OBX|5|NM|8310-5^Body temperature^LN||39.1|Cel|||||F|||20260204112432
+OBX|6|NM|29463-7^Body weight^LN||82|kg|||||F|||20260204112432
+OBX|7|NM|8302-2^Body height^LN||182|cm|||||F|||20260204112432
+DG1|1|ICD10|J18.0^^ICD-10-CM|Bronchial pneumonia unspecified|||||||||||||H
+DG1|2|ICD10|R06.03^^ICD-10-CM|Labored breathing|||||||||||||M
+DG1|3|ICD10|E11.9^^ICD-10-CM|Type 2 diabetes|||||||||||||M
+PR1|1|1234573|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Bilateral patchy infiltrates predominantly in lower lobes. Bronchial wall thickening. Mild hyperinflation.
+NTE|2||IMPRESSION: Bronchial pneumonia with bilateral lower lobe involvement. Diabetes complicates recovery. Intensive treatment needed.
+NTE|3||MEDICATIONS: Cefixime 400mg PO BID for 10 days; Salbutamol inhaler 2 puffs Q6H PRN; Metformin 500mg PO TID; Insulin glargine 20 units SQ at bedtime; Chest physiotherapy BID
+NTE|4||SEVERITY: HIGH - Bilateral lower lobe infiltrates, high fever >39°C, mild hypoxia at 93%, dyspnea, comorbid diabetes
+NTE|5||DISCHARGE SUMMARY: Male patient with bronchial pneumonia complicated by diabetes. Bilateral lower lobe involvement noted. Requires careful glucose and respiratory management. Hospital stay minimum 7 days. Diabetes control critical for recovery.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||15.8|K/uL|4.5-11.0|H|||||F|||20260204113937
+OBX|9|NM|718-7^Hemoglobin^LN||13.5|g/dL|13.5-17.5|N|||||F|||20260204113937
+OBX|10|NM|777-3^Platelet Count^LN||290|K/uL|150-400|N|||||F|||20260204113937
+OBX|11|NM|30522-7^C-Reactive Protein^LN||42.7|mg/L|<10|H|||||F|||20260204113937
+OBX|12|NM|33959-8^Procalcitonin^LN||2.1|ng/mL|<0.5|H|||||F|||20260204113937

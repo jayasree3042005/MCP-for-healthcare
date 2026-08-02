@@ -1,0 +1,95 @@
+{
+  "resourceType": "Patient",
+  "id": "P010",
+  "name": [
+    {
+      "use": "official",
+      "text": "Elizabeth White",
+      "family": "White",
+      "given": [
+        "Elizabeth"
+      ]
+    }
+  ],
+  "birthDate": "1967-04-20",
+  "gender": "female",
+  "age": 58,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0110"
+    },
+    {
+      "system": "email",
+      "value": "elizabeth.white@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "741 Oak Street, San Diego, CA 92101",
+      "line": [
+        "741 Oak Street"
+      ],
+      "city": "San Diego",
+      "state": "CA",
+      "postalCode": "92101"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "Richard White"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "Pneumothorax",
+    "modality": "XRay",
+    "riskLevel": "High",
+    "anomalies": [
+      "Spontaneous pneumothorax 25%",
+      "Mediastinal shift",
+      "Dyspnea"
+    ],
+    "treatment": "Chest tube insertion with observation",
+    "medications": [
+      {
+        "name": "Oxygen Therapy",
+        "dosage": "100% O2",
+        "frequency": "Continuous",
+        "duration": "Until pneumothorax resolves"
+      },
+      {
+        "name": "Pain Management",
+        "dosage": "10mg",
+        "frequency": "Every 4 hours",
+        "duration": "As needed"
+      },
+      {
+        "name": "Antibiotics",
+        "dosage": "1g",
+        "frequency": "Twice daily",
+        "duration": "7 days"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.965009"
+  }
+}

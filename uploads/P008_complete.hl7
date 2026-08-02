@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113938||ADT^A01|MSG008|P|2.5
+EVN|A01|20260204113938
+PID|1||P008^^^HOSPITAL||Moore^Elizabeth||19800305|F|||258 Birch Boulevard^San Diego^CA^92101^^^^C||+1-555-0108^PH^^^1~elizabeth.moore@email.com^E
+NK1|1|Thomas Moore|HUS||+1-555-0007
+OBX|1|NM|8867-4^Heart rate^LN||88|beats/minute|||||F|||20260204112433
+OBX|2|NM|8480-6^Systolic blood pressure^LN||118|mmHg|||||F|||20260204112433
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||76|mmHg|||||F|||20260204112433
+OBX|4|NM|59408-5^Oxygen saturation^LN||96|%|||||F|||20260204112433
+OBX|5|NM|8310-5^Body temperature^LN||37.9|Cel|||||F|||20260204112433
+OBX|6|NM|29463-7^Body weight^LN||68|kg|||||F|||20260204112433
+OBX|7|NM|8302-2^Body height^LN||168|cm|||||F|||20260204112433
+DG1|1|ICD10|J11.0^^ICD-10-CM|Influenza A with pneumonia|||||||||||||M
+DG1|2|ICD10|R05.00^^ICD-10-CM|Fever unspecified|||||||||||||L
+PR1|1|1234574|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Scattered ground glass opacities in bilateral upper lobes. No consolidation. Minimal findings consistent with viral etiology.
+NTE|2||IMPRESSION: Influenza A with associated pneumonia. Early stage with favorable prognosis. Antiviral therapy indicated.
+NTE|3||MEDICATIONS: Oseltamivir 75mg PO BID for 5 days; Acetaminophen 325mg PO Q4-6H PRN; Robitussin 10mL PO Q4H PRN; Fluids and rest recommended
+NTE|4||SEVERITY: LOW-MEDIUM - Ground glass opacities, normal vital signs, low fever <38°C, good oxygen saturation, minimal symptoms
+NTE|5||DISCHARGE SUMMARY: Female patient with influenza A pneumonia presenting with early radiographic findings. Vital signs stable. Good clinical condition. Discharged on antiviral therapy with home care instructions and follow-up in 2 days.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||9.8|K/uL|4.5-11.0|N|||||F|||20260204113938
+OBX|9|NM|718-7^Hemoglobin^LN||14.2|g/dL|12.0-16.0|N|||||F|||20260204113938
+OBX|10|NM|777-3^Platelet Count^LN||340|K/uL|150-400|N|||||F|||20260204113938
+OBX|11|NM|30522-7^C-Reactive Protein^LN||18.5|mg/L|<10|H|||||F|||20260204113938
+OBX|12|NM|33959-8^Procalcitonin^LN||0.5|ng/mL|<0.5|N|||||F|||20260204113938

@@ -1,0 +1,95 @@
+{
+  "resourceType": "Patient",
+  "id": "P007",
+  "name": [
+    {
+      "use": "official",
+      "text": "David Martinez",
+      "family": "Martinez",
+      "given": [
+        "David"
+      ]
+    }
+  ],
+  "birthDate": "1945-12-25",
+  "gender": "male",
+  "age": 80,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0107"
+    },
+    {
+      "system": "email",
+      "value": "david.martinez@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "147 Birch Court, Phoenix, AZ 85001",
+      "line": [
+        "147 Birch Court"
+      ],
+      "city": "Phoenix",
+      "state": "AZ",
+      "postalCode": "85001"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "Juan Martinez"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "COVID-19",
+    "modality": "CT",
+    "riskLevel": "Very High",
+    "anomalies": [
+      "Bilateral GGO",
+      "Consolidation >50%",
+      "O2 sat 88%"
+    ],
+    "treatment": "ICU with mechanical ventilation",
+    "medications": [
+      {
+        "name": "Remdesivir",
+        "dosage": "200mg IV",
+        "frequency": "Day 1, then 100mg daily",
+        "duration": "5 days"
+      },
+      {
+        "name": "Dexamethasone",
+        "dosage": "6mg",
+        "frequency": "Once daily",
+        "duration": "10 days"
+      },
+      {
+        "name": "Mechanical Ventilation",
+        "dosage": "FiO2 60%",
+        "frequency": "Continuous",
+        "duration": "Until weaning"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.947090"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "resourceType": "Patient",
+  "id": "P006",
+  "name": [
+    {
+      "use": "official",
+      "text": "Patricia Wilson",
+      "family": "Wilson",
+      "given": [
+        "Patricia"
+      ]
+    }
+  ],
+  "birthDate": "1975-02-18",
+  "gender": "female",
+  "age": 50,
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+1-555-0106"
+    },
+    {
+      "system": "email",
+      "value": "patricia.wilson@email.com"
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "text": "987 Cedar Lane, Houston, TX 77001",
+      "line": [
+        "987 Cedar Lane"
+      ],
+      "city": "Houston",
+      "state": "TX",
+      "postalCode": "77001"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+              "code": "FTH",
+              "display": "Father"
+            }
+          ]
+        }
+      ],
+      "name": {
+        "text": "George Wilson"
+      },
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "+1-555-XXXX"
+        }
+      ]
+    }
+  ],
+  "medicalRecord": {
+    "diagnosis": "Bronchitis",
+    "modality": "CT",
+    "riskLevel": "Medium",
+    "anomalies": [
+      "Bronchial wall thickening",
+      "Mild bronchiectasis",
+      "Persistent cough"
+    ],
+    "treatment": "Outpatient management with antibiotics",
+    "medications": [
+      {
+        "name": "Azithromycin",
+        "dosage": "500mg",
+        "frequency": "Once daily",
+        "duration": "5 days"
+      },
+      {
+        "name": "Guaifenesin",
+        "dosage": "200mg",
+        "frequency": "Every 4 hours",
+        "duration": "10 days"
+      },
+      {
+        "name": "Salbutamol Inhaler",
+        "dosage": "2 puffs",
+        "frequency": "As needed",
+        "duration": "2 weeks"
+      }
+    ],
+    "recordDate": "2026-02-04T11:39:31.941570"
+  }
+}

@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+dataset/
+models/
+*.h5
+*.pt
+*.pth
+*.dcm
+*.log
+.env

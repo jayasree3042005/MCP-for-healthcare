@@ -1,0 +1,25 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113939||ADT^A01|MSG009|P|2.5
+EVN|A01|20260204113939
+PID|1||P009^^^HOSPITAL||Taylor^George||19590128|M|||369 Spruce Street^Dallas^TX^75201^^^^C||+1-555-0109^PH^^^1~george.taylor@email.com^E
+NK1|1|Margaret Taylor|WIF||+1-555-0008
+OBX|1|NM|8867-4^Heart rate^LN||101|beats/minute|||||F|||20260204112434
+OBX|2|NM|8480-6^Systolic blood pressure^LN||145|mmHg|||||F|||20260204112434
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||90|mmHg|||||F|||20260204112434
+OBX|4|NM|59408-5^Oxygen saturation^LN||90|%|||||F|||20260204112434
+OBX|5|NM|8310-5^Body temperature^LN||39.8|Cel|||||F|||20260204112434
+OBX|6|NM|29463-7^Body weight^LN||88|kg|||||F|||20260204112434
+OBX|7|NM|8302-2^Body height^LN||185|cm|||||F|||20260204112434
+DG1|1|ICD10|J18.9^^ICD-10-CM|Pneumonia unspecified|||||||||||||H
+DG1|2|ICD10|R05.9^^ICD-10-CM|Fever unspecified|||||||||||||H
+DG1|3|ICD10|I50.9^^ICD-10-CM|Heart failure unspecified|||||||||||||H
+PR1|1|1234575|99214^^CPT|Chest CT Scan|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Extensive consolidation bilateral lower lobes. Pulmonary edema noted. Cardiomegaly 15% increase from baseline.
+NTE|2||IMPRESSION: Severe pneumonia with concurrent congestive heart failure. Critical findings. ICU admission recommended. High mortality risk.
+NTE|3||MEDICATIONS: Piperacillin-Tazobactam 4.5g IV Q6H; Vancomycin 15-20mg/kg IV Q8-12H; Furosemide 80mg IV Q6H; Dobutamine 5mcg/kg/min IV infusion; Oxygen with CPAP support
+NTE|4||SEVERITY: CRITICAL - Extensive bilateral consolidation, very high fever >39.5°C, critical hypoxia <90%, tachycardia >100, comorbid CHF, cardiomegaly
+NTE|5||DISCHARGE SUMMARY: Male patient with severe pneumonia complicated by decompensated heart failure. Critical radiographic and clinical findings. Requires ICU level monitoring and support. Prognosis very guarded. Multiple organ dysfunction risk. Family meetings regarding care goals recommended.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||19.2|K/uL|4.5-11.0|H|||||F|||20260204113939
+OBX|9|NM|718-7^Hemoglobin^LN||12.1|g/dL|13.5-17.5|L|||||F|||20260204113939
+OBX|10|NM|777-3^Platelet Count^LN||160|K/uL|150-400|N|||||F|||20260204113939
+OBX|11|NM|30522-7^C-Reactive Protein^LN||68.5|mg/L|<10|H|||||F|||20260204113939
+OBX|12|NM|33959-8^Procalcitonin^LN||6.8|ng/mL|<0.5|H|||||F|||20260204113939

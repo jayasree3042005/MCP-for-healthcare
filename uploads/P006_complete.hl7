@@ -1,0 +1,24 @@
+MSH|^~\&|HIS|HOSPITAL|LIS|LAB|20260204113936||ADT^A01|MSG006|P|2.5
+EVN|A01|20260204113936
+PID|1||P006^^^HOSPITAL||Miller^Susan||19720618|F|||987 Maple Drive^Philadelphia^PA^19101^^^^C||+1-555-0106^PH^^^1~susan.miller@email.com^E
+NK1|1|David Miller|HUS||+1-555-0005
+OBX|1|NM|8867-4^Heart rate^LN||85|beats/minute|||||F|||20260204112431
+OBX|2|NM|8480-6^Systolic blood pressure^LN||125|mmHg|||||F|||20260204112431
+OBX|3|NM|8481-4^Diastolic blood pressure^LN||79|mmHg|||||F|||20260204112431
+OBX|4|NM|59408-5^Oxygen saturation^LN||97|%|||||F|||20260204112431
+OBX|5|NM|8310-5^Body temperature^LN||37.5|Cel|||||F|||20260204112431
+OBX|6|NM|29463-7^Body weight^LN|72|kg|||||F|||20260204112431
+OBX|7|NM|8302-2^Body height^LN||160|cm|||||F|||20260204112431
+DG1|1|ICD10|J10.1^^ICD-10-CM|Influenza with pneumonia unspecified|||||||||||||M
+DG1|2|ICD10|R06.02^^ICD-10-CM|Tachypnea|||||||||||||L
+PR1|1|1234572|99214^^CPT|Chest X-Ray Interpretation|||||||||||||||||||||20260204
+NTE|1||FINDINGS: Right middle lobe infiltrate with peribronchial distribution. No consolidation. Minimal findings.
+NTE|2||IMPRESSION: Mild influenza with secondary pneumonia. Prognosis excellent. Supportive care sufficient.
+NTE|3||MEDICATIONS: Oseltamivir 75mg PO BID for 5 days; Paracetamol 500mg PO Q6H PRN; Guaifenesin 200mg PO Q4H PRN for congestion
+NTE|4||SEVERITY: LOW - Minimal radiographic findings, normal oxygen saturation, mild fever <38°C, minimal respiratory symptoms
+NTE|5||DISCHARGE SUMMARY: Female patient with mild influenza and associated pneumonia. Minimal imaging findings. Good clinical condition. Discharged home with supportive care instructions. Follow-up with primary care.
+OBX|8|NM|6690-2^White Blood Cell Count^LN||10.2|K/uL|4.5-11.0|N|||||F|||20260204113936
+OBX|9|NM|718-7^Hemoglobin^LN||13.8|g/dL|12.0-16.0|N|||||F|||20260204113936
+OBX|10|NM|777-3^Platelet Count^LN||350|K/uL|150-400|N|||||F|||20260204113936
+OBX|11|NM|30522-7^C-Reactive Protein^LN||15.2|mg/L|<10|H|||||F|||20260204113936
+OBX|12|NM|33959-8^Procalcitonin^LN||0.4|ng/mL|<0.5|N|||||F|||20260204113936
